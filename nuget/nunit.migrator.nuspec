@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>nunit.migrator</id>
-    <version>1.0.0.0</version>
-    <title>nunit.migrator</title>
-    <authors>marcin</authors>
-    <owners>marcin</owners>
-    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
-    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
-    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+    <id>marwac.nunit.migrator</id>
+    <version>0.1.0.0</version>
+    <title>marwac.nunit.migrator</title>
+    <authors>Marcin Wachulski</authors>
+    <owners>Marcin Wachulski</owners>
+    <licenseUrl>https://github.com/wachulski/nunit-migrator/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/wachulski/nunit-migrator</projectUrl>
+    <iconUrl>https://github.com/wachulski/wachulski.github.io/blob/master/mw-logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>nunit.migrator</description>
-    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
-    <copyright>Copyright</copyright>
-    <tags>nunit.migrator, analyzers</tags>
+    <description>marwac.nunit.migrator migrates your NUnit v2 project to v3 with the help of Roslyn analyzers.</description>
+    <releaseNotes>ExpectedException attribute migration (lacks handlers still).</releaseNotes>
+    <copyright>Copyright (C) 2017 Marcin Wachulski</copyright>
+    <tags>nunit, analyzers, roslyn</tags>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" targetFramework="" />
     </frameworkAssemblies>
@@ -21,7 +21,8 @@
   </metadata>
   <!-- The convention for analyzers is to put language agnostic dlls in analyzers\portable50 and language specific analyzers in either analyzers\portable50\cs or analyzers\portable50\vb -->
   <files>
-    <file src="*.dll" target="analyzers\dotnet\cs" exclude="**\Microsoft.CodeAnalysis.*;**\System.Collections.Immutable.*;**\System.Reflection.Metadata.*;**\System.Composition.*" />
+    <file src="*.dll" target="analyzers\dotnet\cs" 
+          exclude="**\Microsoft.CodeAnalysis.*;**\System.Collections.Immutable.*;**\System.Reflection.Metadata.*;**\System.Composition.*" />
     <file src="tools\*.ps1" target="tools\" />
   </files>
 </package>

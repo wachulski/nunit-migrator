@@ -8,6 +8,6 @@
     <PackageReference Include="NUnit" Version="2.6.4" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\nunit.migrator\nunit.migrator.csproj" />
+    <ProjectReference Include="..\nunit.migrator\nunit.migrator.csproj" />
   </ItemGroup>
 </Project>

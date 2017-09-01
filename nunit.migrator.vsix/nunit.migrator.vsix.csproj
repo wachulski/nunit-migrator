@@ -74,7 +74,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\nunit.migrator\nunit.migrator.csproj">
+    <ProjectReference Include="..\nunit.migrator\nunit.migrator.csproj">
       <Project>{67757ACA-1804-4642-8D4F-54F2B81B9745}</Project>
       <Name>nunit.migrator</Name>
     </ProjectReference>

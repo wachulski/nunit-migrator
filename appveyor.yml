@@ -1,14 +1,34 @@
 version: 0.1.0.{build}
 image: Visual Studio 2017
+environment:
+  sonarLogin:
+    secure: vce5ru4C230eLLnqmchykzMfUsIB+8mtNByKMiaXYhvN0MXv/jiwZESUD4DUZdkF
+init:
+- cmd: git config --global --unset core.autocrlf
+configuration: Release
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
   version: '{version}'
 before_build:
-- cmd: nuget restore
+- ps: nuget restore
 build:
   verbosity: minimal
 test:
   assemblies:
+  - '**\*.Tests.dll'
+  
+for:
+- 
+  branches:
     only:
-      - '**\*.Tests.dll'
+    - master
+  install:
+  - cinst msbuild-sonarqube-runner
+  - cinst dotcover-cli
+  before_build:
+  - ps: nuget restore
+  - ps: ./sonar.ps1 begin $env:sonarLogin {version}
+  after_test:
+  - ps: dotCover analyze dotCover.xml -TargetExecutable="$($(Get-Command nunit-console).Source)"
+  - ps: ./sonar.ps1 end $env:sonarLogin

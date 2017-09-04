@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AnalyzeParams>
+  <TargetArguments>--result=TestResult.xml nunit.migrator.tests/bin/Release/net452/nunit.migrator.tests.dll</TargetArguments>
+  <TargetWorkingDir>.</TargetWorkingDir>
+  <Output>dotCover.html</Output>
+  <ReportType>HTML</ReportType>
+  <Filters>
+    <IncludeFilters>
+      <FilterEntry>
+        <ModuleMask>nunit.migrator</ModuleMask>
+      </FilterEntry>
+    </IncludeFilters>
+  </Filters>
+</AnalyzeParams>

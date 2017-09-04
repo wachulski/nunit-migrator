@@ -107,8 +107,13 @@ _ReSharper*/
 # TeamCity is a build add-in
 _TeamCity*
 
+# SonarQube analysis artifacts
+.sonarqube
+
 # DotCover is a Code Coverage Tool
 *.dotCover
+DotCover.html
+DotCover
 
 # NCrunch
 _NCrunch_*

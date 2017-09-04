@@ -28,7 +28,7 @@ for:
   - cinst dotcover-cli
   before_build:
   - ps: nuget restore
-  - ps: ./sonar.ps1 begin $env:sonarLogin {version}
+  - ps: ./sonar.ps1 begin $env:sonarLogin $env:APPVEYOR_BUILD_VERSION
   after_test:
   - ps: dotCover analyze dotCover.xml -TargetExecutable="$($(Get-Command nunit-console).Source)"
   - ps: ./sonar.ps1 end $env:sonarLogin

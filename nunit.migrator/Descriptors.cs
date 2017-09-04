@@ -2,15 +2,18 @@
 
 namespace NUnit.Migrator
 {
-    internal class Descriptors
+    internal static class Descriptors
     {
-        public static readonly DiagnosticDescriptor ExpectedException = new DiagnosticDescriptor(
+        public static readonly DiagnosticDescriptor ExceptionExpectancy = new DiagnosticDescriptor(
             id: "NUnit2Migra001",
-            title: "ExpectedException attribute conversion",
-            messageFormat: "'ExpectedException' attribute is not supported in NUnit v3. Consider replacing with Assert.Throws<T>.",
+            title: "Exception expectancy at attribute level",
+            messageFormat: "Method '{0}' contains 'ExpectedException' attribute and/or " +
+                           "'TestCase' exception related arguments which should be replaced with Assert.Throws<T>.",
             category: "Usage",
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true,
-            description: "'ExpectedException' should be replaced with Assert.Throws<T>.");
+            description: "Neither 'ExpectedException' attribute nor 'TestCase' exception related arguments are " +
+                         "supported in NUnit v3 any longer. Consider replacing them with appropriate Assert.Throws<T>" +
+                         "constructs.");
     }
 }

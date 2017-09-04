@@ -4,7 +4,7 @@
     <RootNamespace>NUnit.Migrator</RootNamespace>
     <TargetFramework>netstandard1.1</TargetFramework>
     <Authors>Marcin Wachulski</Authors>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="1.1.0">

@@ -1,4 +1,12 @@
-Param(
+<#
+.SYNOPSIS
+    Initializes or finalizes SonarQube scanner for MSBuild to be executed in between
+.EXAMPLE
+    ./sonar.ps1 begin YOUR_SONARCLOUD_AUTH_TOKEN 3.1.0.14792
+    ./sonar.ps1 end YOUR_SONARCLOUD_AUTH_TOKEN
+#>
+
+param(
     [Parameter(Mandatory=$true,Position=1)]
     [string]$step,
     [Parameter(Mandatory=$true,Position=2)]

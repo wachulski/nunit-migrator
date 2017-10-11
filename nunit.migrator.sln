@@ -1,13 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.migrator", "nunit.migrator\nunit.migrator.csproj", "{67757ACA-1804-4642-8D4F-54F2B81B9745}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "nunit.migrator", "nunit.migrator\nunit.migrator.csproj", "{67757ACA-1804-4642-8D4F-54F2B81B9745}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.migrator.tests", "nunit.migrator.tests\nunit.migrator.tests.csproj", "{0F6FBA4C-EBA6-4A4F-93F1-4343EB5D0275}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "nunit.migrator.tests", "nunit.migrator.tests\nunit.migrator.tests.csproj", "{0F6FBA4C-EBA6-4A4F-93F1-4343EB5D0275}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.migrator.vsix", "nunit.migrator.vsix\nunit.migrator.vsix.csproj", "{76718797-BC14-4088-87A4-31753DCF27FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{FBE56A2C-CB08-423E-AE57-7C057970210C}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
+		set-versions.ps1 = set-versions.ps1
+		sonar.ps1 = sonar.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +37,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {655B235E-3BE6-42EB-AD56-1C7C1C303F6C}
 	EndGlobalSection
 EndGlobal

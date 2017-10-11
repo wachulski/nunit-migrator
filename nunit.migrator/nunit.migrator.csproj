@@ -5,6 +5,8 @@
     <TargetFramework>netstandard1.1</TargetFramework>
     <Authors>Marcin Wachulski</Authors>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <Version>0.1.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="1.1.0">

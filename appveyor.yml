@@ -2,21 +2,31 @@ version: 0.1.0.{build}
 image: Visual Studio 2017
 environment:
   sonarLogin:
-    secure: vce5ru4C230eLLnqmchykzMfUsIB+8mtNByKMiaXYhvN0MXv/jiwZESUD4DUZdkF
+    secure: us3NmhirEyZlRItv0KXrdOeGZATXPrLl2r7b0qJp77NBsmQNo2iwLFt4zzXIJGRk
 init:
 - cmd: git config --global --unset core.autocrlf
 configuration: Release
 dotnet_csproj:
   patch: true
-  file: '**\*.csproj'
+  file: 'nunit.migrator\*.csproj'
   version: '{version}'
 before_build:
 - ps: nuget restore
-build:
-  verbosity: minimal
+- ps: ./set-versions.ps1 $env:APPVEYOR_BUILD_VERSION
 test:
   assemblies:
   - '**\*.Tests.dll'
+artifacts:
+  - path: 'nunit.migrator.vsix\**\*.vsix'
+    name: vsix
+deploy:
+  provider: GitHub
+  auth_token:
+    secure: PfDIBcJmuoBtInoTSoSMOQCUtlk0+WU6wRYG9/MwWbFAEhOLJnQ1vhMu3FcOXLHt
+  artifact: vsix
+  prerelease: true
+  on:
+    appveyor_repo_tag: true
   
 for:
 - 
@@ -28,7 +38,12 @@ for:
   - cinst dotcover-cli
   before_build:
   - ps: nuget restore
+  - ps: ./set-versions.ps1 $env:APPVEYOR_BUILD_VERSION
   - ps: ./sonar.ps1 begin $env:sonarLogin $env:APPVEYOR_BUILD_VERSION
   after_test:
   - ps: dotCover analyze dotCover.xml -TargetExecutable="$($(Get-Command nunit-console).Source)"
   - ps: ./sonar.ps1 end $env:sonarLogin
+-
+  branches:
+    except:
+    - master

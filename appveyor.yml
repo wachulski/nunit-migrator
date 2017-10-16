@@ -1,5 +1,8 @@
 version: 0.1.0.{build}
 image: Visual Studio 2017
+skip_commits:
+  files:
+    - '**/*.md'
 environment:
   sonarLogin:
     secure: us3NmhirEyZlRItv0KXrdOeGZATXPrLl2r7b0qJp77NBsmQNo2iwLFt4zzXIJGRk

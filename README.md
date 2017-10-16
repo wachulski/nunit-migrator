@@ -1,15 +1,15 @@
 # Have a project grounded in NUnit v2 and want v3?
 
-So you have your unit tests project founded on NUnit v2 realm. And you are considering the upgrade. And yes, your are right - this means three kind of changes:
+So you have your unit tests project founded on NUnit v2 realm. And you are considering the upgrade. And yes, your are right - this means three kind of changes you are going to deal with:
 
- 1. Straightforward ones - easy to do with some regex replace.
- 2. Not so obvious ones - you will need to take a careful look to make the code compile.
- 3. Really painful ones - even if the code compiles, some unit tests result in red. Time investment needed.
+ 1. **Straightforward ones** - easy to do with some regex replace.
+ 2. **Not so obvious ones** - you will need to take a careful look to make the code compile.
+ 3. **Really painful ones** - even if the code compiles, some unit tests result in red.
 
 This utility is aiming at helping you with:
 
- 1. Detecting all such changes.
- 2. Offering automatic fixes for almost all 1) cases and some of type 2).
+ 1. **Detecting** all such changes.
+ 2. Offering **automatic fixes** for almost all 1) cases and some of type 2).
 
 ## Helping you with breaking changes
 
@@ -32,7 +32,7 @@ For vast majority of breaking changes introduced by v3 of the framework this uti
 | System.MTAThreadAttribute    | No longer treated as `RequiresMTAAttribute`             | :soon: | :x: |
 | System.STAThreadAttribute    | No longer treated as `RequiresSTAAttribute`             | :soon: | :x: |
 | TearDown and OneTimeTearDown | There is a change to the logic by which teardown methods are called. | :soon: | :x: |
-| TestCaseAttribute            | Named parameter `Result=` is no longer supported. Use `ExpectedResult=`. Named parameter `Ignore=` now takes a string, giving the reason for ignoring the test.| :soon:  | :soon:  and more |
+| TestCaseAttribute            | Named parameter `Result=` is no longer supported. Use `ExpectedResult=`. Named parameter `Ignore=` now takes a string, giving the reason for ignoring the test.| :soon:  | :soon: |
 | TestCaseSourceAttribute      | The attribute forms using a string argument to refer to the data source must now use only static fields, properties or methods. | :soon: | :x: |
 | TestFixtureAttribute         | Named parameter `Ignore=` now takes a string, giving the reason for ignoring the test. | :soon:  | :x: |
 | TestFixtureSetUpAttribute    | Deprecated. Use `OneTimeSetUpAttribute`.  | :soon: | :soon: |

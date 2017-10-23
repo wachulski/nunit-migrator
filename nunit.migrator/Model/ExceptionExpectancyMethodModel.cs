@@ -45,7 +45,7 @@ namespace NUnit.Migrator.Model
 
             var diagnosticLocation = eligibleAttributes.Length == 1 
                 ? eligibleAttributes.First().GetLocation()
-                : methodSyntax.GetLocation();
+                : methodSyntax.Identifier.GetLocation();
             var methodName = methodSyntax.Identifier.Text;
             diagnostic = Diagnostic.Create(Descriptors.ExceptionExpectancy, diagnosticLocation, methodName);
 

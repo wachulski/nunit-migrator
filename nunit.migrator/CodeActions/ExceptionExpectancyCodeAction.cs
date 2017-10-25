@@ -24,7 +24,6 @@ namespace NUnit.Migrator.CodeActions
         private readonly MethodDeclarationSyntax _method;
         private readonly TestCaseExceptionEquivalenceCluster[] _clusters;
         private readonly SyntaxTriviaList _methodLineSeparator;
-        private readonly TestMethodNamer _testMethodNamer;
 
         public ExceptionExpectancyCodeAction(Document document, MethodDeclarationSyntax method, 
             SemanticModel semanticModel, NUnitFramework.Symbols nunit)
@@ -34,7 +33,6 @@ namespace NUnit.Migrator.CodeActions
             _model = new ExceptionExpectancyMethodModel(method, semanticModel, nunit);
             _clusters = TestCaseExceptionEquivalenceCluster.CreateMany(_model);
             _methodLineSeparator = GetMethodLineSeparator(method);
-            _testMethodNamer = new TestMethodNamer(_method, _model.ExceptionFreeTestCaseAttributeNodes.Any());
             
             Debug.Assert(_clusters.Length > 0, "_clusters.Length > 0");
         }
@@ -56,7 +54,8 @@ namespace NUnit.Migrator.CodeActions
         private IEnumerable<MethodDeclarationSyntax> ProduceFixedTestMethods()
         {
             var fixedMethods = new List<MethodDeclarationSyntax>();
-            
+            var testMethodNamer = new TestMethodNamer(_method, _model.ExceptionFreeTestCaseAttributeNodes.Any());
+
             if (TryProduceExceptionUnrelatedTestMethod(out MethodDeclarationSyntax fixedExceptionUnrelatedMethod))
             {
                 fixedMethods.Add(fixedExceptionUnrelatedMethod);
@@ -64,14 +63,14 @@ namespace NUnit.Migrator.CodeActions
 
             foreach (var cluster in _clusters)
             {
-                fixedMethods.Add(ProduceTestMethodForExceptionCluster(cluster, _clusters.Length));
+                fixedMethods.Add(ProduceTestMethodForExceptionCluster(cluster, _clusters.Length, testMethodNamer));
             }
 
             return fixedMethods;
         }
 
         private MethodDeclarationSyntax ProduceTestMethodForExceptionCluster(
-            TestCaseExceptionEquivalenceCluster cluster, int clustersCount)
+            TestCaseExceptionEquivalenceCluster cluster, int clustersCount, TestMethodNamer testMethodNamer)
         {
             var testCasesToRemain = cluster.EquivalentItems.Select(i => i.AttributeNode).ToArray();
             var exceptionExpectancy = cluster.EquivalentItems.First();
@@ -80,7 +79,7 @@ namespace NUnit.Migrator.CodeActions
                 .WithoutExceptionExpectancyInAttributes(testCasesToRemain)
                 .WithBody(CreateAssertedBlock(exceptionExpectancy))
                 .WithTrailingTrivia(CreateClusterMethodTrailingTrivia(cluster))
-                .WithIdentifier(_testMethodNamer.CreateName(exceptionExpectancy, clustersCount));
+                .WithIdentifier(testMethodNamer.CreateName(exceptionExpectancy, clustersCount));
 
             return clusterMethod;
         }

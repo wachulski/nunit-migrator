@@ -81,7 +81,7 @@ public class TestClass
         {
             throw new Exception();
         });
-        Assert.That(ex.Message, Is.StringMatching(""Msg!""));
+        Assert.That(ex.Message, Does.Match(""Msg!""));
     }
 
     [TestCase(2)]
@@ -91,10 +91,10 @@ public class TestClass
         {
             throw new Exception();
         });
-        Assert.That(ex.Message, Is.StringContaining(""Overwrite!""));
+        Assert.That(ex.Message, Does.Contain(""Overwrite!""));
     }
 }";
-            VerifyCSharpFix(source, expected);
+            VerifyCSharpFix(source, expected, allowNewCompilerDiagnostics: true);
         }
 
         [Test]
@@ -187,7 +187,7 @@ public class TestClass
         {
             throw new Exception();
         });
-        Assert.That(ex.Message, Is.StringContaining(""Msg!""));
+        Assert.That(ex.Message, Does.Contain(""Msg!""));
     }
 
     [TestCase(6)]
@@ -210,7 +210,7 @@ public class TestClass
         Assert.That(ex.Message, Is.EqualTo(""Msg!+""));
     }
 }";
-            VerifyCSharpFix(source, expected);
+            VerifyCSharpFix(source, expected, allowNewCompilerDiagnostics: true);
         }
     }
 }

@@ -154,12 +154,13 @@ public class TestClass
         Assert.That(ex.Message, Is.EqualTo(""Invalid op message text.""));
     }
 }";
-            VerifyCSharpFix(source, expected);
+            VerifyCSharpFix(source, expected, allowNewCompilerDiagnostics: true);
         }
 
-        [TestCase("MessageMatch.Exact", "EqualTo")]
-        [TestCase("MessageMatch.Contains", "StringContaining")]
-        [TestCase("MessageMatch.Regex", "StringMatching")]
+        [TestCase("MessageMatch.Exact", "Is.EqualTo")]
+        [TestCase("MessageMatch.Contains", "Does.Contain")]
+        [TestCase("MessageMatch.Regex", "Does.Match")]
+        [TestCase("MessageMatch.StartsWith", "Does.StartWith")]
         public void For1TC_WhenExpectedMessageAndMatchTypeProvided_AssertsOnMessageWithProperStringCheck(
             string attributeArg, string expectedAssertionForm)
         {
@@ -191,10 +192,10 @@ public class TestClass
         {
             throw new ArgumentException(""Msg."");
         });
-        Assert.That(ex.Message, Is." + expectedAssertionForm + @"(""Msg.""));
+        Assert.That(ex.Message, " + expectedAssertionForm + @"(""Msg.""));
     }
 }";
-            VerifyCSharpFix(source, expected);
+            VerifyCSharpFix(source, expected, allowNewCompilerDiagnostics: true);
         }
 
         [Test]
@@ -230,7 +231,7 @@ public class TestClass
         Assert.That(ex.Message, Is.EqualTo(""msg""));
     }
 }";
-            VerifyCSharpFix(source, expected);
+            VerifyCSharpFix(source, expected, allowNewCompilerDiagnostics: true);
         }
 
         [Test]
@@ -275,7 +276,7 @@ public class TestClass
         Assert.That(ex.Message, Is.EqualTo(""msg!""));
     }
 }";
-            VerifyCSharpFix(source, expected);
+            VerifyCSharpFix(source, expected, allowNewCompilerDiagnostics: true);
         }
 
         [Test]
@@ -466,7 +467,7 @@ public class TestClass
         {
             throw new InvalidOperationException();
         });
-        Assert.That(ex.Message, Is.StringContaining(""Error:""));
+        Assert.That(ex.Message, Does.Contain(""Error:""));
     }
 
     [TestCase(6)]
@@ -479,7 +480,7 @@ public class TestClass
         });
     }
 }";
-            VerifyCSharpFix(source, expected);
+            VerifyCSharpFix(source, expected, allowNewCompilerDiagnostics: true);
         }
     }
 }

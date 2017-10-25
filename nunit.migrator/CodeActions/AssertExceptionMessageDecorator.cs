@@ -37,7 +37,7 @@ namespace NUnit.Migrator.CodeActions
                 SyntaxFactory.Argument(
                     SyntaxFactory.InvocationExpression(
                         SyntaxFactory.MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression,
-                            SyntaxFactory.IdentifierName(NUnitFramework.IsIdentifier),
+                            SyntaxFactory.IdentifierName(CreateDoesOrIs()),
                             SyntaxFactory.IdentifierName(
                                 CreateExpectedExceptionMessageAssertionMethod())),
                         SyntaxFactory.ArgumentList(
@@ -49,14 +49,21 @@ namespace NUnit.Migrator.CodeActions
             };
         }
 
+        private string CreateDoesOrIs() => 
+            _attribute.MatchType == null 
+            || _attribute.MatchType == NUnitFramework.MessageMatch.Exact 
+                ? NUnitFramework.IsIdentifier 
+                : NUnitFramework.DoesIdentifier;
+
         private string CreateExpectedExceptionMessageAssertionMethod()
         {
             var matchType = _attribute.MatchType;
 
             switch (matchType)
             {
-                case NUnitFramework.MessageMatch.Contains: return NUnitFramework.Is.StringContaining;
-                case NUnitFramework.MessageMatch.Regex: return NUnitFramework.Is.StringMatching;
+                case NUnitFramework.MessageMatch.Contains: return NUnitFramework.Does.Contain;
+                case NUnitFramework.MessageMatch.Regex: return NUnitFramework.Does.Match;
+                case NUnitFramework.MessageMatch.StartsWith: return NUnitFramework.Does.StartWith;
                 default: return NUnitFramework.Is.EqualTo;
             }
         }

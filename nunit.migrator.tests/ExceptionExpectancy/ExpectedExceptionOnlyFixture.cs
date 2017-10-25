@@ -284,9 +284,10 @@ public class LastEx : Exception {}";
             VerifyCSharpFix(source, expected);
         }
 
-        [TestCase("MessageMatch.Exact", "EqualTo")]
-        [TestCase("MessageMatch.Contains", "StringContaining")]
-        [TestCase("MessageMatch.Regex", "StringMatching")]
+        [TestCase("MessageMatch.Exact", "Is.EqualTo")]
+        [TestCase("MessageMatch.Contains", "Does.Contain")]
+        [TestCase("MessageMatch.Regex", "Does.Match")]
+        [TestCase("MessageMatch.StartsWith", "Does.StartWith")]
         public void WhenExceptionMessageMatchTypeSpecified_FixesToMessageStringSpecificCheck(string attributeArg,
             string expectedAssertionForm)
         {
@@ -315,10 +316,10 @@ public class TestClass
         {
             throw new System.InvalidOperationException(""Invalid op message text."");
         });
-        Assert.That(ex.Message, Is." + expectedAssertionForm + @"(""Invalid op message text.""));
+        Assert.That(ex.Message, " + expectedAssertionForm + @"(""Invalid op message text.""));
     }
 }";
-            VerifyCSharpFix(source, expected);
+            VerifyCSharpFix(source, expected, allowNewCompilerDiagnostics: true);
         }
 
         [Test]
@@ -352,7 +353,7 @@ public class TestClass
         Assert.That(ex.Message, Is.EqualTo(""Invalid op message text.""));
     }
 }";
-            VerifyCSharpFix(source, expected);
+            VerifyCSharpFix(source, expected, allowNewCompilerDiagnostics: true);
         }
 
         [Test]

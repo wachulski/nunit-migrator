@@ -9,6 +9,7 @@ namespace NUnit.Migrator.Helpers
         public const string TestCaseAttributeSimpleName = "TestCase";
         public const string ExpectedExceptionSimpleName = "ExpectedException";
         public const string AssertIdentifier = "Assert";
+        public const string DoesIdentifier = "Does";
         public const string IsIdentifier = "Is";
 
         private const string ExpectedExceptionAttributeQualifiedName = "NUnit.Framework.ExpectedExceptionAttribute";
@@ -18,6 +19,13 @@ namespace NUnit.Migrator.Helpers
         {
             public const string ThrowsIdentifier = "Throws";
             public const string ThatIdentifier = "That";
+        }
+
+        internal static class Does
+        {
+            public const string StartWith = "StartWith";
+            public const string Contain = "Contain";
+            public const string Match = "Match";
         }
 
         internal static class ExpectedExceptionArgument
@@ -41,6 +49,7 @@ namespace NUnit.Migrator.Helpers
             public const string Exact = "Exact";
             public const string Contains = "Contains";
             public const string Regex = "Regex";
+            public const string StartsWith = "StartsWith";
         }
 
         internal class Symbols

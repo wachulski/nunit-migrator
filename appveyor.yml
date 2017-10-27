@@ -1,24 +1,45 @@
 version: 0.1.2.{build}
 image: Visual Studio 2017
+branches:
+  only:
+  - master
 skip_commits:
   files:
+    - '**/*.txt'
     - '**/*.md'
 environment:
   sonarLogin:
     secure: us3NmhirEyZlRItv0KXrdOeGZATXPrLl2r7b0qJp77NBsmQNo2iwLFt4zzXIJGRk
-init:
-- cmd: git config --global --unset core.autocrlf
 configuration: Release
 dotnet_csproj:
   patch: true
   file: 'nunit.migrator\*.csproj'
   version: '{version}'
+init:
+- cmd: git config --global --unset core.autocrlf
+install:
+- ps: >- 
+    if (!$env:APPVEYOR_PULL_REQUEST_NUMBER) { 
+        cinst msbuild-sonarqube-runner;
+        cinst dotcover-cli;
+    }
 before_build:
-- ps: nuget restore
-- ps: ./set-versions.ps1 $env:APPVEYOR_BUILD_VERSION
-test:
-  assemblies:
-  - '**\*.Tests.dll'
+- ps: >- 
+    nuget restore;
+    ./set-versions.ps1 $env:APPVEYOR_BUILD_VERSION;
+    if (!$env:APPVEYOR_PULL_REQUEST_NUMBER) { 
+        ./sonar.ps1 begin $env:sonarLogin $env:APPVEYOR_BUILD_VERSION 
+    }
+test_script:
+- ps: >-
+    if (!$env:APPVEYOR_PULL_REQUEST_NUMBER) { 
+        dotCover analyze dotCover.xml -TargetExecutable="$($(Get-Command nunit-console).Source)";
+        ./sonar.ps1 end $env:sonarLogin;
+    } else {
+        nunit-console ./nunit.migrator.tests/bin/Release/net452/nunit.migrator.tests.dll /xml TestResult.xml
+        $wc = New-Object 'System.Net.WebClient';
+        $wc.UploadFile("https://ci.appveyor.com/api/testresults/xunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestResult.xml))
+    }
 artifacts:
   - path: 'nunit.migrator.vsix\**\*.vsix'
     name: vsix
@@ -30,23 +51,3 @@ deploy:
   prerelease: true
   on:
     appveyor_repo_tag: true
-  
-for:
-- 
-  branches:
-    only:
-    - master
-  install:
-  - cinst msbuild-sonarqube-runner
-  - cinst dotcover-cli
-  before_build:
-  - ps: nuget restore
-  - ps: ./set-versions.ps1 $env:APPVEYOR_BUILD_VERSION
-  - ps: ./sonar.ps1 begin $env:sonarLogin $env:APPVEYOR_BUILD_VERSION
-  after_test:
-  - ps: dotCover analyze dotCover.xml -TargetExecutable="$($(Get-Command nunit-console).Source)"
-  - ps: ./sonar.ps1 end $env:sonarLogin
--
-  branches:
-    except:
-    - master

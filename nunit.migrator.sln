@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{FBE5
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
 		set-versions.ps1 = set-versions.ps1
+		sonar.appveyor.ps1 = sonar.appveyor.ps1
 		sonar.ps1 = sonar.ps1
 	EndProjectSection
 EndProject

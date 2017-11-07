@@ -31,7 +31,8 @@ namespace NUnit.Migrator.Model
         private void ParseAttributeArgumentSyntax(string nameEquals, ExpressionSyntax expression)
         {
             if (nameEquals != null
-                && nameEquals != NUnitFramework.ExpectedExceptionArgument.UserMessage)
+                && nameEquals != NUnitFramework.ExpectedExceptionArgument.UserMessage
+                && nameEquals != NUnitFramework.ExpectedExceptionArgument.Handler)
                 return;
 
             switch (expression)
@@ -45,6 +46,10 @@ namespace NUnit.Migrator.Model
                 case LiteralExpressionSyntax literal when nameEquals ==
                                                           NUnitFramework.ExpectedExceptionArgument.UserMessage:
                     UserMessage = literal.Token.ValueText;
+                    break;
+                case LiteralExpressionSyntax literal when nameEquals ==
+                                                          NUnitFramework.ExpectedExceptionArgument.Handler:
+                    HandlerName = literal.Token.ValueText;
                     break;
             }
         }

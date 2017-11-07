@@ -142,6 +142,58 @@ public class TestClass
         }
 
         [Test]
+        public void For2TCsThatForm2Clusters_GivenExceptionHandler_AddsHandlerInvocationToEachClusterAssert()
+        {
+            var source = @"
+using System;
+using NUnit.Framework;
+
+[TestFixture]
+public class TestClass
+{
+    [ExpectedException(Handler = ""HandleMe"")]
+    [TestCase(1, ExpectedException = typeof(InvalidOperationException))]
+    [TestCase(2, ExpectedException = typeof(ArgumentException))]
+    public void TestMethod(int x)
+    {
+        throw new Exception();
+    }
+
+    void HandleMe(Exception ex) {}
+}";
+            var expected = @"
+using System;
+using NUnit.Framework;
+
+[TestFixture]
+public class TestClass
+{
+    [TestCase(1)]
+    public void TestMethod_ShouldThrowInvalidOperationException(int x)
+    {
+        var ex = Assert.Throws<InvalidOperationException>(() =>
+        {
+            throw new Exception();
+        });
+        HandleMe(ex);
+    }
+
+    [TestCase(2)]
+    public void TestMethod_ShouldThrowArgumentException(int x)
+    {
+        var ex = Assert.Throws<ArgumentException>(() =>
+        {
+            throw new Exception();
+        });
+        HandleMe(ex);
+    }
+
+    void HandleMe(Exception ex) {}
+}";
+            VerifyCSharpFix(source, expected, allowNewCompilerDiagnostics: true);
+        }
+
+        [Test]
         public void For2TCs_WhenBothTestCasesDoNotOverwriteExceptionProperties_CreatesASingleClusterOfTestCases()
         {
             var source = @"

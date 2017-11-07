@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Migrator.CodeActions;
@@ -15,6 +16,7 @@ namespace NUnit.Migrator.Model
     internal abstract class ExceptionExpectancyAtAttributeLevel
     {
         private const string ImplicitAssertedExceptionTypeAssumedByDefault = "System.Exception";
+        private const string ExpectExceptionHandlerMethodName = "HandleException";
 
         protected internal string AssertedExceptionTypeName;
 
@@ -23,6 +25,7 @@ namespace NUnit.Migrator.Model
             AttributeNode = attribute ?? throw new ArgumentNullException(nameof(attribute));
 
             ParseAttributeArguments(attribute, ParseAttributeArgumentSyntax);
+            ParseTestFixtureClass(attribute.FirstAncestorOrSelf<ClassDeclarationSyntax>());
         }
 
         public AttributeSyntax AttributeNode { get; }
@@ -34,17 +37,20 @@ namespace NUnit.Migrator.Model
         public TypeSyntax AssertedExceptionType => SyntaxFactory.ParseTypeName(
             AssertedExceptionTypeName ?? ImplicitAssertedExceptionTypeAssumedByDefault);
 
+        public string HandlerName { get; protected set; }
+
         public virtual IAssertExceptionBlockCreator GetAssertExceptionBlockCreator()
         {
             IAssertExceptionBlockCreator creator = new AssertThrowsExceptionCreator();
 
+            if (ExpectedMessage != null || HandlerName != null)
+                creator = new AssignAssertThrowsToLocalVariableDecorator(creator);
+
             if (ExpectedMessage != null)
-            {
-                creator = new AssertExceptionMessageDecorator(
-                    new AssignAssertThrowsToLocalVariableDecorator(
-                        creator),
-                    this);
-            }
+                creator = new AssertExceptionMessageDecorator(creator, this);
+
+            if (HandlerName != null)
+                creator = new AssertHandlerMethodDecorator(creator, HandlerName);
 
             return creator;
         }
@@ -62,6 +68,14 @@ namespace NUnit.Migrator.Model
                 var nameEquals = argument.NameEquals?.Name?.Identifier.ValueText;
 
                 argumentParseAction(nameEquals, argument.Expression);
+            }
+        }
+
+        private void ParseTestFixtureClass(BaseTypeDeclarationSyntax classDeclaration)
+        {
+            if (SyntaxHelper.GetAllBaseTypes(classDeclaration).Any(t => t.ToString() == "IExpectException"))
+            {
+                HandlerName = ExpectExceptionHandlerMethodName;
             }
         }
 

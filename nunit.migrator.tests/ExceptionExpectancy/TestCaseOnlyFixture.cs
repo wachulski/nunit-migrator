@@ -199,6 +199,44 @@ public class TestClass
         }
 
         [Test]
+        public void For1TC_WhenFixtureImplementsIExpectException_InvokeHandlerMethodAtLast()
+        {
+            var source = @"
+using NUnit.Framework;
+
+[TestFixture]
+public class TestClass : IExpectException
+{
+    [TestCase(1, ExpectedException = typeof(System.ArgumentException))]
+    public void TestMethod(int i)
+    {
+        throw new System.ArgumentException();
+    }
+
+    void HandleException(System.Exception ex) {}
+}";
+            var expected = @"
+using NUnit.Framework;
+
+[TestFixture]
+public class TestClass : IExpectException
+{
+    [TestCase(1)]
+    public void TestMethod(int i)
+    {
+        var ex = Assert.Throws<System.ArgumentException>(() =>
+        {
+            throw new System.ArgumentException();
+        });
+        HandleException(ex);
+    }
+
+    void HandleException(System.Exception ex) {}
+}";
+            VerifyCSharpFix(source, expected);
+        }
+
+        [Test]
         public void For2TCs_When2ExpectSameExceptionWithSameExceptionMessage_FixesToProperAssertThrows()
         {
             var source = @"

@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace NUnit.Migrator.Helpers
 {
-    internal static class AttributeSyntaxHelper
+    internal static class SyntaxHelper
     {
         public static MethodDeclarationSyntax WithoutExceptionExpectancyInAttributes(
             this MethodDeclarationSyntax method, AttributeSyntax[] testCasesToRemain)
@@ -19,6 +19,11 @@ namespace NUnit.Migrator.Helpers
             return resultMethod.RemoveNodes(GetEmptyAttributeLists(resultMethod)
                     .Union(GetEmptyAttributeArgumentLists(resultMethod)),
                 SyntaxRemoveOptions.KeepNoTrivia);
+        }
+
+        internal static TypeSyntax[] GetAllBaseTypes(BaseTypeDeclarationSyntax typeDeclaration)
+        {
+            return typeDeclaration.BaseList?.Types.Select(t => t.Type).ToArray() ?? new TypeSyntax[] {};
         }
 
         private static IEnumerable<SyntaxNode> GetEmptyAttributeArgumentLists(BaseMethodDeclarationSyntax resultMethod)

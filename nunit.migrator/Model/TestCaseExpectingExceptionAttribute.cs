@@ -11,8 +11,8 @@ namespace NUnit.Migrator.Model
     internal class TestCaseExpectingExceptionAttribute : ExceptionExpectancyAtAttributeLevel
     {
         /// <summary>
-        /// Represents <c>NUnit.Framework.TestCaseAttribute</c> attributes that do not contain exception properties, 
-        /// but belong to a method decorated with <c>NUnit.Framework.ExpectedExceptionAttribute</c>.
+        /// Constructs <c>NUnit.Framework.TestCaseAttribute</c> model that allows for sourcing exception related 
+        /// properties from <c>NUnit.Framework.ExpectedExceptionAttribute</c> in case of not defining them by itself.
         /// </summary>
         public TestCaseExpectingExceptionAttribute(AttributeSyntax attribute, 
             ExpectedExceptionAttribute expectedException) : base(attribute)
@@ -28,6 +28,9 @@ namespace NUnit.Migrator.Model
 
             if (MatchType == null)
                 MatchType = expectedException.MatchType;
+
+            if (HandlerName == null)
+                HandlerName = expectedException.HandlerName;
         }
     }
 }

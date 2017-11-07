@@ -33,6 +33,7 @@ namespace NUnit.Migrator.Helpers
             public const string ExpectedException = "ExpectedException";
             public const string ExpectedExceptionName = "ExpectedExceptionName";
             public const string ExpectedMessage = "ExpectedMessage";
+            public const string Handler = "Handler";
             public const string MatchType = "MatchType";
             public const string UserMessage = "UserMessage";
         }

@@ -93,8 +93,9 @@ namespace NUnit.Migrator.CodeActions
         
         private BlockSyntax CreateAssertedBlock(ExceptionExpectancyAtAttributeLevel exceptionExpectancy)
         {
-            return exceptionExpectancy.GetAssertExceptionBlockCreator().Create(_method,
-                exceptionExpectancy.AssertedExceptionType).WithAdditionalAnnotations(Formatter.Annotation);
+            return exceptionExpectancy.GetAssertExceptionBlockCreator()
+                .Create(_method, exceptionExpectancy.AssertedExceptionType)
+                .WithAdditionalAnnotations(Formatter.Annotation);
         }
 
         private bool TryProduceExceptionUnrelatedTestMethod(out MethodDeclarationSyntax fixedExceptionUnrelatedMethod)

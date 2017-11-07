@@ -388,5 +388,160 @@ public class TestClass
 }";
             VerifyCSharpFix(source, expected);
         }
+
+        [Test]
+        public void WhenFixtureImplementsIExpectException_FixesToAssertThrowsWithHandlerMethodInvocation()
+        {
+            var source = @"
+using NUnit.Framework;
+
+[TestFixture]
+public class TestClass : IExpectException
+{
+    [Test, ExpectedException]
+    public void TestMethod()
+    {
+        throw new System.InvalidOperationException();
+    }
+
+    void HandleException(System.Exception exception) {}
+}";
+            var expected = @"
+using NUnit.Framework;
+
+[TestFixture]
+public class TestClass : IExpectException
+{
+    [Test]
+    public void TestMethod()
+    {
+        var ex = Assert.Throws<System.Exception>(() =>
+        {
+            throw new System.InvalidOperationException();
+        });
+        HandleException(ex);
+    }
+
+    void HandleException(System.Exception exception) {}
+}";
+            VerifyCSharpFix(source, expected);
+        }
+
+        [Test]
+        public void WhenTestSpecifiesHandlerName_FixesToAssertThrowsWithHandlerMethodInvocation()
+        {
+            var source = @"
+using NUnit.Framework;
+
+[TestFixture]
+public class TestClass
+{
+    [Test, ExpectedException(Handler = ""MyExceptionHandler"")]
+    public void TestMethod()
+    {
+        throw new System.InvalidOperationException();
+    }
+
+    void MyExceptionHandler(System.Exception exception) {}
+}";
+            var expected = @"
+using NUnit.Framework;
+
+[TestFixture]
+public class TestClass
+{
+    [Test]
+    public void TestMethod()
+    {
+        var ex = Assert.Throws<System.Exception>(() =>
+        {
+            throw new System.InvalidOperationException();
+        });
+        MyExceptionHandler(ex);
+    }
+
+    void MyExceptionHandler(System.Exception exception) {}
+}";
+            VerifyCSharpFix(source, expected);
+        }
+
+        [Test]
+        public void WhenTestSpecifiesHandlerNameAndFixtureImplementsIExpectException_FixesToAssertThrowsWithHandlerMethodInvocationOverrideFromTestAttribute()
+        {
+            var source = @"
+using NUnit.Framework;
+
+[TestFixture]
+public class TestClass : IExpectException
+{
+    [Test, ExpectedException(Handler = ""MyExceptionHandler"")]
+    public void TestMethod()
+    {
+        throw new System.InvalidOperationException();
+    }
+
+    void HandleException(System.Exception exception) {}
+    void MyExceptionHandler(System.Exception exception) {}
+}";
+            var expected = @"
+using NUnit.Framework;
+
+[TestFixture]
+public class TestClass : IExpectException
+{
+    [Test]
+    public void TestMethod()
+    {
+        var ex = Assert.Throws<System.Exception>(() =>
+        {
+            throw new System.InvalidOperationException();
+        });
+        MyExceptionHandler(ex);
+    }
+
+    void HandleException(System.Exception exception) {}
+    void MyExceptionHandler(System.Exception exception) {}
+}";
+            VerifyCSharpFix(source, expected);
+        }
+
+        [Test]
+        public void WhenBothHandlerNameAndExpectedMessageSpecified_FixesToAssertThrowsWithMessageAssertCheckFirstAndThenHandlerInvocation()
+        {
+            var source = @"
+using NUnit.Framework;
+
+[TestFixture]
+public class TestClass
+{
+    [Test, ExpectedException(Handler = ""MyExceptionHandler"", ExpectedMessage=""Msg!"")]
+    public void TestMethod()
+    {
+        throw new System.InvalidOperationException();
+    }
+
+    void MyExceptionHandler(System.Exception exception) {}
+}";
+            var expected = @"
+using NUnit.Framework;
+
+[TestFixture]
+public class TestClass
+{
+    [Test]
+    public void TestMethod()
+    {
+        var ex = Assert.Throws<System.Exception>(() =>
+        {
+            throw new System.InvalidOperationException();
+        });
+        Assert.That(ex.Message, Is.EqualTo(""Msg!""));
+        MyExceptionHandler(ex);
+    }
+
+    void MyExceptionHandler(System.Exception exception) {}
+}";
+            VerifyCSharpFix(source, expected);
+        }
     }
 }

@@ -39,7 +39,9 @@ namespace NUnit.Migrator.Model
 
         public string HandlerName { get; protected set; }
 
-        public virtual IAssertExceptionBlockCreator GetAssertExceptionBlockCreator()
+        public string UserMessage { get; protected set; }
+
+        public IAssertExceptionBlockCreator GetAssertExceptionBlockCreator()
         {
             IAssertExceptionBlockCreator creator = new AssertThrowsExceptionCreator();
 
@@ -51,6 +53,9 @@ namespace NUnit.Migrator.Model
 
             if (HandlerName != null)
                 creator = new AssertHandlerMethodDecorator(creator, HandlerName);
+
+            if (UserMessage != null)
+                creator = new AssertUserMessageDecorator(creator, this);
 
             return creator;
         }

@@ -194,6 +194,42 @@ public class TestClass
         }
 
         [Test]
+        public void For1TCAndExpectedException_GivenUserMessage_AddsUserMessageAssertToFixedTestMethod()
+        {
+            var source = @"
+using System;
+using NUnit.Framework;
+
+[TestFixture]
+public class TestClass
+{
+    [ExpectedException(UserMessage = ""User msg"")]
+    [TestCase(1)]
+    public void TestMethod(int x)
+    {
+        throw new Exception();
+    }
+}";
+            var expected = @"
+using System;
+using NUnit.Framework;
+
+[TestFixture]
+public class TestClass
+{
+    [TestCase(1)]
+    public void TestMethod(int x)
+    {
+        Assert.Throws<System.Exception>(() =>
+        {
+            throw new Exception();
+        }, ""User msg"");
+    }
+}";
+            VerifyCSharpFix(source, expected, allowNewCompilerDiagnostics: true);
+        }
+
+        [Test]
         public void For2TCs_WhenBothTestCasesDoNotOverwriteExceptionProperties_CreatesASingleClusterOfTestCases()
         {
             var source = @"

@@ -7,10 +7,10 @@ namespace NUnit.Migrator.CodeActions
 {
     internal class AssertUserMessageDecorator : AssertExceptionBlockDecorator
     {
-        private readonly ExpectedExceptionAttribute _attribute;
+        private readonly ExceptionExpectancyAtAttributeLevel _attribute;
 
         public AssertUserMessageDecorator(IAssertExceptionBlockCreator blockCreator,
-            ExpectedExceptionAttribute attribute) : base(blockCreator)
+            ExceptionExpectancyAtAttributeLevel attribute) : base(blockCreator)
         {
             _attribute = attribute;
         }
@@ -24,7 +24,7 @@ namespace NUnit.Migrator.CodeActions
 
             var userMessageArgument = SyntaxFactory.Argument(
                 SyntaxFactory.LiteralExpression(SyntaxKind.StringLiteralExpression,
-                    SyntaxFactory.ParseToken($"\"{_attribute.UserMessage}\"")));
+                    SyntaxFactory.ParseToken($"\"{_attribute.UserMessage}\""))); // TODO: no need for full attribute, msg only
 
             var decoratedInvocationArgumentList = invocation.ArgumentList.AddArguments(userMessageArgument);
 

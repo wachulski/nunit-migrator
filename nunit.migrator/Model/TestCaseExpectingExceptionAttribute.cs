@@ -31,6 +31,9 @@ namespace NUnit.Migrator.Model
 
             if (HandlerName == null)
                 HandlerName = expectedException.HandlerName;
+
+            if (UserMessage == null)
+                UserMessage = expectedException.UserMessage;
         }
     }
 }

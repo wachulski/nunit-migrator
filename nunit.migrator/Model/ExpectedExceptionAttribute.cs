@@ -1,5 +1,4 @@
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using NUnit.Migrator.CodeActions;
 using NUnit.Migrator.Helpers;
 
 namespace NUnit.Migrator.Model
@@ -14,18 +13,6 @@ namespace NUnit.Migrator.Model
         public ExpectedExceptionAttribute(AttributeSyntax attribute) : base(attribute)
         {
             ParseAttributeArguments(attribute, ParseAttributeArgumentSyntax);
-        }
-
-        public string UserMessage { get; private set; }
-
-        public override IAssertExceptionBlockCreator GetAssertExceptionBlockCreator()
-        {
-            var creator = base.GetAssertExceptionBlockCreator();
-
-            if (UserMessage != null)
-                creator = new AssertUserMessageDecorator(creator, this);
-
-            return creator;
         }
 
         private void ParseAttributeArgumentSyntax(string nameEquals, ExpressionSyntax expression)

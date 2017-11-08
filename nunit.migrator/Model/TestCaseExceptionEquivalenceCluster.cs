@@ -15,7 +15,21 @@ namespace NUnit.Migrator.Model
 
         public static TestCaseExceptionEquivalenceCluster[] CreateMany(ExceptionExpectancyMethodModel model)
         {
+            // degenerated case of a single ExpectedException for a test method
+            if (model.ExceptionRelatedAttributes.Length == 1
+                && model.ExceptionRelatedAttributes[0] is ExpectedExceptionAttribute)
+            {
+                return new[] 
+                {
+                    new TestCaseExceptionEquivalenceCluster(new[]
+                    {
+                        model.ExceptionRelatedAttributes[0]
+                    })
+                } ;
+            }
+
             return model.ExceptionRelatedAttributes
+                .OfType<TestCaseExpectingExceptionAttribute>()
                 .GroupBy(tc => tc, Comparer.Instance)
                 .Select(g => new TestCaseExceptionEquivalenceCluster(g))
                 .ToArray();

@@ -6,6 +6,50 @@ namespace NUnit.Migrator.Tests.ExceptionExpectancy
     public class MixedExpectedExceptionAndTestCasesFixture : ExceptionExpectancyFixProviderTests
     {
         [Test]
+        public void For2TCs_WhenAllExpectSpecificExceptions_FixesInto2TestMethodsAndProperExceptionAsserts()
+        {
+            var source = @"
+using NUnit.Framework;
+
+[TestFixture]
+public class TestClass
+{
+    [ExpectedException]
+    [TestCase(1, ExpectedException = typeof(System.InvalidOperationException))]
+    [TestCase(2, ExpectedException = typeof(System.ArgumentException))]
+    public void TestMethod(int x)
+    {
+        throw new System.Exception();
+    }
+}";
+            var expected = @"
+using NUnit.Framework;
+
+[TestFixture]
+public class TestClass
+{
+    [TestCase(1)]
+    public void TestMethod_ShouldThrowInvalidOperationException(int x)
+    {
+        Assert.Throws<System.InvalidOperationException>(() =>
+        {
+            throw new System.Exception();
+        });
+    }
+
+    [TestCase(2)]
+    public void TestMethod_ShouldThrowArgumentException(int x)
+    {
+        Assert.Throws<System.ArgumentException>(() =>
+        {
+            throw new System.Exception();
+        });
+    }
+}";
+            VerifyCSharpFix(source, expected);
+        }
+
+        [Test]
         public void For2TCs_When1TCExpectsSpecificException_FixesInto2TestMethodsAndProperExceptionAsserts()
         {
             var source = @"

@@ -1,3 +1,8 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/71ra15a58euogncn?svg=true)](https://ci.appveyor.com/project/wachulski/nunit-migrator)
+[![Quality Gate](https://sonarcloud.io/api/badges/gate?key=MarWac_NUnit_Migrator)](https://sonarcloud.io/dashboard/index/MarWac_NUnit_Migrator)
+[![Coverage](https://sonarcloud.io/api/badges/measure?key=MarWac_NUnit_Migrator&metric=coverage)](https://sonarcloud.io/dashboard/index/MarWac_NUnit_Migrator)
+[![Technical debt ratio](https://sonarcloud.io/api/badges/measure?key=MarWac_NUnit_Migrator&metric=sqale_debt_ratio)](https://sonarcloud.io/dashboard/index/MarWac_NUnit_Migrator)
+
 # Have a project grounded in NUnit v2 and want v3?
 
 So you have your unit tests project founded on NUnit v2 realm. And you are considering the upgrade. And yes, your are right - this means three kind of changes you are going to deal with:
@@ -23,7 +28,7 @@ For vast majority of breaking changes introduced by v3 of the framework this uti
 
 |            Name              |          Notes                                        | Analyzer | Code fixes |
 |------------------------------|-------------------------------------------------------|----------|------------|
-| ExpectedExceptionAttribute   | No longer supported. Use `Assert.Throws` or `Assert.That`. | :white_check_mark: | :white_check_mark: `Assert.Throws` |
+| ExpectedExceptionAttribute   | No longer supported. Use `Assert.Throws` or `Assert.That`. | :white_check_mark: | :white_check_mark: |
 | IgnoreAttribute              | The reason is now mandatory | :soon: | :x: |
 | RequiredAddinAttribute       | No longer supported. | :soon: | :x: |
 | RequiresMTAAttribute         | Deprecated. Use `ApartmentAttribute`                    | :soon: | :soon: |

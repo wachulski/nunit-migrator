@@ -11,22 +11,24 @@ So you have your unit tests project founded on NUnit v2 realm. And you are consi
  2. **Not so obvious ones** - you will need to take a careful look to make the code compile.
  3. **Really painful ones** - even if the code compiles, some unit tests result in red.
 
-This utility is aiming at helping you with:
-
- 1. **Detecting** all such changes.
- 2. Offering **automatic fixes** for almost all 1) cases and some of type 2).
-
 ## Helping you with breaking changes
 
-For vast majority of breaking changes introduced by v3 of the framework this utility reports warnings or errors, for some - equips you with code fixes. See the following table to see what it currently supports (based on https://github.com/nunit/docs/wiki/Breaking-Changes material).
+For vast majority of breaking changes introduced by v3 of the framework this utility reports warnings or errors, for some - equips you with code fixes. See the following tables to see what is currently supported (based on https://github.com/nunit/docs/wiki/Breaking-Changes material).
 
- * :white_check_mark: - the feature is there in place
+##### Aid
+
+ * :mag: - detecting breaking changes (Roslyn analyzer)
+ * :bulb: - fixing breaking changes to v3 equivalent code (Roslyn code fix)
+
+##### Development status
+
+ * :white_check_mark: - released, the feature is there in place
  * :soon: - the feature is planned to be developed soon
  * :x: - there are no plans to develop the feature
 
 ### Attributes
 
-|            Name              |          Notes                                        | Analyzer | Code fixes |
+|            Name              |          Notes                                        | :mag: | :bulb: |
 |------------------------------|-------------------------------------------------------|----------|------------|
 | ExpectedExceptionAttribute   | No longer supported. Use `Assert.Throws` or `Assert.That`. | :white_check_mark: | :white_check_mark: |
 | IgnoreAttribute              | The reason is now mandatory | :soon: | :x: |
@@ -46,7 +48,7 @@ For vast majority of breaking changes introduced by v3 of the framework this uti
 
 ###### Assertions and Constraints
 
-|          Feature                 |          Notes                                        | Analyzer | Code fixes |
+|          Feature                 |          Notes                                        | :mag: | :bulb: |
 |----------------------------------|-------------------------------------------------------|----------|------------|
 | Assert.IsNullOrEmpty             | No longer supported. Use `Assert.That(..., Is.Null.Or.Empty)` | :soon: | :soon: |
 | Assert.IsNotNullOrEmpty          | No longer supported. Use `Assert.That(..., Is.Not.Null.And.Not.Empty)` | :soon: | :soon: |
@@ -69,7 +71,7 @@ For vast majority of breaking changes introduced by v3 of the framework this uti
 
 ###### Other Framework Features
 
-|      Feature       |          Notes                                        | Analyzer | Code fixes |
+|      Feature       |          Notes                                        | :mag: | :bulb: |
 |--------------------|-------------------------------------------------------|----------|------------|
 | Addins             | No longer supported. | :x: | :x: |
 | CurrentDirectory   | No longer set to the directory containing the test assembly. Use `TestContext.CurrentContext.TestDirectory` to locate that directory. | :soon: | :soon: |

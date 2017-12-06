@@ -14,6 +14,7 @@ namespace NUnit.Migrator.Helpers
 
         private const string ExpectedExceptionAttributeQualifiedName = "NUnit.Framework.ExpectedExceptionAttribute";
         private const string TestCaseAttributeQualifiedName = "NUnit.Framework.TestCaseAttribute";
+        private const string TextConstraintsQualifiedName = "NUnit.Framework.Text";
 
         internal static class Assert
         {
@@ -41,8 +42,6 @@ namespace NUnit.Migrator.Helpers
         internal static class Is
         {
             public const string EqualTo = "EqualTo";
-            public const string StringContaining = "StringContaining";
-            public const string StringMatching = "StringMatching";
         }
 
         internal static class MessageMatch
@@ -59,6 +58,8 @@ namespace NUnit.Migrator.Helpers
 
             public INamedTypeSymbol TestCase { get; private set; }
 
+            public INamedTypeSymbol Text { get; private set; }
+
             private bool ArePresent => ExpectedException != null && TestCase != null;
 
             internal static bool TryGetNUnitSymbols(Compilation compilation, out Symbols nunit)
@@ -66,7 +67,8 @@ namespace NUnit.Migrator.Helpers
                 nunit = new Symbols
                 {
                     ExpectedException = compilation.GetTypeByMetadataName(ExpectedExceptionAttributeQualifiedName),
-                    TestCase = compilation.GetTypeByMetadataName(TestCaseAttributeQualifiedName)
+                    TestCase = compilation.GetTypeByMetadataName(TestCaseAttributeQualifiedName),
+                    Text = compilation.GetTypeByMetadataName(TextConstraintsQualifiedName)
                 };
 
                 return nunit.ArePresent;

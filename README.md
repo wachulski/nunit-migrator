@@ -59,15 +59,15 @@ For vast majority of breaking changes introduced by v3 of the framework this uti
 | Is.StringMatching                | Deprecated. Use `Does.Match` | :soon:  | :soon:  |
 | NullOrEmptyStringConstraint      | No longer supported. See `Assert.IsNullOrEmpty` above   | :soon: | :soon: |
 | SubDirectoryContainsConstraint   | No longer supported. Various alternatives are available.    | :soon: | :soon: |
-| Text.All                         | No longer supported. Use `Does.All` | :soon:  | :soon:  |
-| Text.Contains                    | No longer supported. Use `Does.Contain` or `Contains.Substring` | :soon:  | :soon:  |
-| Text.DoesNotContain              | No longer supported. Use `Does.Not.Contain` | :soon:  | :soon:  |
-| Text.StartsWith                  | No longer supported. Use `Does.StartWith` | :soon:  | :soon:  |
-| Text.DoesNotStartWith            | No longer supported. Use `Does.Not.StartWith` | :soon:  | :soon:  |
-| Text.EndsWith                    | No longer supported. Use `Does.EndWith` | :soon:  | :soon:  |
-| Text.DoesNotEndWith              | No longer supported. Use `Does.Not.EndWith` | :soon:  | :soon:  |
-| Text.Matches                     | No longer supported. Use `Does.Match` | :soon:  | :soon:  |
-| Text.DoesNotMatch                | No longer supported. Use `Does.Not.Match` | :soon:  | :soon:  |
+| Text.All                         | No longer supported. Use `Has.All` or `Is.All` | :white_check_mark:  | :white_check_mark:  |
+| Text.Contains                    | No longer supported. Use `Does.Contain` or `Contains.Substring` | :white_check_mark:  | :white_check_mark:  |
+| Text.DoesNotContain              | No longer supported. Use `Does.Not.Contain` | :white_check_mark:  | :white_check_mark:  |
+| Text.StartsWith                  | No longer supported. Use `Does.StartWith` | :white_check_mark:  | :white_check_mark:  |
+| Text.DoesNotStartWith            | No longer supported. Use `Does.Not.StartWith` | :white_check_mark:  | :white_check_mark:  |
+| Text.EndsWith                    | No longer supported. Use `Does.EndWith` | :white_check_mark:  | :white_check_mark:  |
+| Text.DoesNotEndWith              | No longer supported. Use `Does.Not.EndWith` | :white_check_mark:  | :white_check_mark:  |
+| Text.Matches                     | No longer supported. Use `Does.Match` | :white_check_mark:  | :white_check_mark:  |
+| Text.DoesNotMatch                | No longer supported. Use `Does.Not.Match` | :white_check_mark:  | :white_check_mark:  |
 
 ###### Other Framework Features
 

@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) with a modification that takes CI/CD to
 the extreme point. This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+* [0.1.7] [2017-12-07] [Added] Text.* to Does.* constraint replacements.
 * [0.1.6] [2017-11-08] [Fixed] UserMessage in TCs clustered together with ExpectedException.
 * [0.1.5] [2017-11-08] [Fixed] IExpectException and Handler in migrating attribute based exceptions.
 * [0.1.4] [2017-11-08] [Fixed] ExpectedException does not migrate if together with test cases in the original method.

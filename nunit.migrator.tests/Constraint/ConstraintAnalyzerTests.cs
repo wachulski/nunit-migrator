@@ -114,7 +114,7 @@ public class TestClass
 }";
             VerifyCSharpDiagnostic(source, new DiagnosticResult
             {
-                Id = "NUnit2Migra002",
+                Id = "NU2M02",
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 10, 31) },
                 Message = breakingCase.ExpectedDiagnosticMessage,
                 Severity = DiagnosticSeverity.Error

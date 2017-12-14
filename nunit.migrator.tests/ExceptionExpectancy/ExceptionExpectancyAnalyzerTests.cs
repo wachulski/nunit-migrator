@@ -35,7 +35,7 @@ public class TestClass
 }";
             VerifyCSharpDiagnostic(source, new DiagnosticResult
             {
-                Id = "NUnit2Migra001",
+                Id = "NU2M01",
                 Locations = new[] {new DiagnosticResultLocation("Test0.cs", 7, 12)},
                 Message =
                     "Method 'TestMethod' contains 'ExpectedException' attribute and/or " +
@@ -62,7 +62,7 @@ public class TestClass
 }";
             VerifyCSharpDiagnostic(source, new DiagnosticResult
             {
-                Id = "NUnit2Migra001",
+                Id = "NU2M01",
                 Locations = new[] {new DiagnosticResultLocation("Test0.cs", 7, 6)},
                 Message =
                     "Method 'TestMethod' contains 'ExpectedException' attribute and/or " +

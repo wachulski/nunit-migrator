@@ -5,7 +5,7 @@ namespace NUnit.Migrator
     internal static class Descriptors
     {
         public static readonly DiagnosticDescriptor ExceptionExpectancy = new DiagnosticDescriptor(
-            id: "NUnit2Migra001",
+            id: "NU2M01",
             title: "Exception expectancy at attribute level",
             messageFormat: "Method '{0}' contains 'ExpectedException' attribute and/or " +
                            "'TestCase' exception related arguments which should be replaced with Assert.Throws<T>.",
@@ -17,7 +17,7 @@ namespace NUnit.Migrator
                          "constructs.");
 
         public static readonly DiagnosticDescriptor Constraint = new DiagnosticDescriptor(
-            id: "NUnit2Migra002",
+            id: "NU2M02",
             title: "Unsupported constraint (translatable to V3)",
             messageFormat: "'{0}' constraint should be replaced with '{1}'.",
             category: "Usage",

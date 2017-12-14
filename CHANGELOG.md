@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) with a modification that takes CI/CD to
 the extreme point. This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+* [0.3.0] [2017-12-14] [Changed] Descriptors IDs shortened. 
 * [0.2.0] [2017-12-14] [Added] Is.InstanceOfType and Is.String* constraint replacements.
 * [0.1.7] [2017-12-07] [Added] Text.* to Does.* constraint replacements.
 * [0.1.6] [2017-11-08] [Fixed] UserMessage in TCs clustered together with ExpectedException.

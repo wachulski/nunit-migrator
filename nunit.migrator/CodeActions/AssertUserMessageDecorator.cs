@@ -1,3 +1,4 @@
+using System;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -7,12 +8,15 @@ namespace NUnit.Migrator.CodeActions
 {
     internal class AssertUserMessageDecorator : AssertExceptionBlockDecorator
     {
-        private readonly ExceptionExpectancyAtAttributeLevel _attribute;
+        private readonly string _userMessage;
 
         public AssertUserMessageDecorator(IAssertExceptionBlockCreator blockCreator,
             ExceptionExpectancyAtAttributeLevel attribute) : base(blockCreator)
         {
-            _attribute = attribute;
+            if (attribute == null)
+                throw new ArgumentNullException(nameof(attribute));
+
+            _userMessage = attribute.UserMessage;
         }
 
         public override BlockSyntax Create(MethodDeclarationSyntax method, TypeSyntax assertedType)
@@ -24,7 +28,7 @@ namespace NUnit.Migrator.CodeActions
 
             var userMessageArgument = SyntaxFactory.Argument(
                 SyntaxFactory.LiteralExpression(SyntaxKind.StringLiteralExpression,
-                    SyntaxFactory.ParseToken($"\"{_attribute.UserMessage}\""))); // TODO: no need for full attribute, msg only
+                    SyntaxFactory.ParseToken($"\"{_userMessage}\"")));
 
             var decoratedInvocationArgumentList = invocation.ArgumentList.AddArguments(userMessageArgument);
 

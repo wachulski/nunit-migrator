@@ -63,7 +63,38 @@ namespace NUnit.Migrator.Tests.Constraint
                 OriginalExpression = "Text.DoesNotMatch(\"a.*1.*\")",
                 ExpectedDiagnosticMessage =
                     "'Text.DoesNotMatch' constraint should be replaced with 'Does.Not.Match'."
-            }
+            },
+            new ConstraintApiBreakingCase
+            {
+                OriginalExpression = "Is.StringStarting(\"str\")",
+                ExpectedDiagnosticMessage = "'Is.StringStarting' constraint should be replaced with 'Does.StartWith'."
+            },
+            new ConstraintApiBreakingCase
+            {
+                OriginalExpression = "Is.StringEnding(\"str\")",
+                ExpectedDiagnosticMessage = "'Is.StringEnding' constraint should be replaced with 'Does.EndWith'."
+            },
+            new ConstraintApiBreakingCase
+            {
+                OriginalExpression = "Is.StringContaining(\"str\")",
+                ExpectedDiagnosticMessage = "'Is.StringContaining' constraint should be replaced with 'Does.Contain'."
+            },
+            new ConstraintApiBreakingCase
+            {
+                OriginalExpression = "Is.StringMatching(\"str\")",
+                ExpectedDiagnosticMessage = "'Is.StringMatching' constraint should be replaced with 'Does.Match'."
+            },
+            new ConstraintApiBreakingCase
+            {
+                OriginalExpression = "Is.InstanceOfType(typeof(string))",
+                ExpectedDiagnosticMessage = "'Is.InstanceOfType' constraint should be replaced with 'Is.InstanceOf'."
+            },
+            new ConstraintApiBreakingCase
+            {
+                OriginalExpression = "Is.InstanceOfType<string>()",
+                ExpectedDiagnosticMessage = 
+                    "'Is.InstanceOfType<string>' constraint should be replaced with 'Is.InstanceOf<string>'."
+            },
         };
 
         [TestCaseSource(nameof(_textConstraintCases))]
@@ -88,6 +119,24 @@ public class TestClass
                 Message = breakingCase.ExpectedDiagnosticMessage,
                 Severity = DiagnosticSeverity.Error
             });
+        }
+
+        [Test]
+        public void ForIsAllWhichHasSameMethodNameAsTextAllButNotMigratable_DoesNotReport()
+        {
+            var source = @"
+using NUnit.Framework;
+
+[TestFixture]
+public class TestClass
+{
+    [Test]
+    public void TestMethod()
+    {
+        Assert.That(""actual"", Is.All.TypeOf<char>());
+    }
+}";
+            VerifyNoDiagnosticReported(source);
         }
 
         [Test]

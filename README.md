@@ -52,11 +52,11 @@ For vast majority of breaking changes introduced by v3 of the framework this uti
 |----------------------------------|-------------------------------------------------------|----------|------------|
 | Assert.IsNullOrEmpty             | No longer supported. Use `Assert.That(..., Is.Null.Or.Empty)` | :soon: | :soon: |
 | Assert.IsNotNullOrEmpty          | No longer supported. Use `Assert.That(..., Is.Not.Null.And.Not.Empty)` | :soon: | :soon: |
-| Is.InstanceOfType                | No longer supported. Use `Is.InstanceOf`                    | :soon:  | :soon:  |
-| Is.StringStarting                | Deprecated. Use `Does.StartWith` | :soon:  | :soon:  |
-| Is.StringContaining              | Deprecated. Use `Does.Contain` | :soon:  | :soon:  |
-| Is.StringEnding                  | Deprecated. Use `Does.EndWith` | :soon:  | :soon:  |
-| Is.StringMatching                | Deprecated. Use `Does.Match` | :soon:  | :soon:  |
+| Is.InstanceOfType                | No longer supported. Use `Is.InstanceOf`                    | :white_check_mark:  | :white_check_mark:  |
+| Is.StringStarting                | Deprecated. Use `Does.StartWith` | :white_check_mark:  | :white_check_mark:  |
+| Is.StringContaining              | Deprecated. Use `Does.Contain` | :white_check_mark:  | :white_check_mark:  |
+| Is.StringEnding                  | Deprecated. Use `Does.EndWith` | :white_check_mark:  | :white_check_mark:  |
+| Is.StringMatching                | Deprecated. Use `Does.Match` | :white_check_mark:  | :white_check_mark:  |
 | NullOrEmptyStringConstraint      | No longer supported. See `Assert.IsNullOrEmpty` above   | :soon: | :soon: |
 | SubDirectoryContainsConstraint   | No longer supported. Various alternatives are available.    | :soon: | :soon: |
 | Text.All                         | No longer supported. Use `Has.All` or `Is.All` | :white_check_mark:  | :white_check_mark:  |

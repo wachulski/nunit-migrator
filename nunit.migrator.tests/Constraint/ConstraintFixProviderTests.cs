@@ -59,6 +59,36 @@ namespace NUnit.Migrator.Tests.Constraint
                 OriginalExpression = "Text.DoesNotMatch(\"dummy\")",
                 FixedExpression = "Does.Not.Match(\"dummy\")"
             },
+            new ConstraintApiFixCase
+            {
+                OriginalExpression = "Is.StringStarting(\"dummy\")",
+                FixedExpression = "Does.StartWith(\"dummy\")"
+            },
+            new ConstraintApiFixCase
+            {
+                OriginalExpression = "Is.StringEnding(\"dummy\")",
+                FixedExpression = "Does.EndWith(\"dummy\")"
+            },
+            new ConstraintApiFixCase
+            {
+                OriginalExpression = "Is.StringContaining(\"dummy\")",
+                FixedExpression = "Does.Contain(\"dummy\")"
+            },
+            new ConstraintApiFixCase
+            {
+                OriginalExpression = "Is.StringMatching(\"dummy\")",
+                FixedExpression = "Does.Match(\"dummy\")"
+            },
+            new ConstraintApiFixCase
+            {
+                OriginalExpression = "Is.InstanceOfType(typeof(string))",
+                FixedExpression = "Is.InstanceOf(typeof(string))"
+            },
+            new ConstraintApiFixCase
+            {
+                OriginalExpression = "Is.InstanceOfType<string>()",
+                FixedExpression = "Is.InstanceOf<string>()"
+            },
         };
 
         [TestCaseSource(nameof(_textConstraintCases))]

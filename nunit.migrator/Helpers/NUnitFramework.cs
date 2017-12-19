@@ -1,6 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.CodeAnalysis;
-
-#pragma warning disable S1144 // Unused private types or members should be removed
 
 namespace NUnit.Migrator.Helpers
 {
@@ -16,6 +15,7 @@ namespace NUnit.Migrator.Helpers
         private const string TestCaseAttributeQualifiedName = "NUnit.Framework.TestCaseAttribute";
         private const string TextConstraintsQualifiedName = "NUnit.Framework.Text";
         private const string IsConstraintsQualifiedName = "NUnit.Framework.Is";
+        private const string AssertQualifiedName = "NUnit.Framework.Assert";
 
         internal static class Assert
         {
@@ -53,6 +53,7 @@ namespace NUnit.Migrator.Helpers
             public const string StartsWith = "StartsWith";
         }
 
+        [SuppressMessage("ReSharper", "MemberHidesStaticFromOuterClass")]
         internal class Symbols
         {
             public INamedTypeSymbol ExpectedException { get; private set; }
@@ -62,6 +63,8 @@ namespace NUnit.Migrator.Helpers
             public INamedTypeSymbol Text { get; private set; }
 
             public INamedTypeSymbol Is { get; private set; }
+
+            public INamedTypeSymbol Assert { get; private set; }
 
             private bool ArePresent => ExpectedException != null && TestCase != null;
 
@@ -73,6 +76,7 @@ namespace NUnit.Migrator.Helpers
                     TestCase = compilation.GetTypeByMetadataName(TestCaseAttributeQualifiedName),
                     Text = compilation.GetTypeByMetadataName(TextConstraintsQualifiedName),
                     Is = compilation.GetTypeByMetadataName(IsConstraintsQualifiedName),
+                    Assert = compilation.GetTypeByMetadataName(AssertQualifiedName),
                 };
 
                 return nunit.ArePresent;
@@ -81,5 +85,3 @@ namespace NUnit.Migrator.Helpers
     }
 
 }
-
-#pragma warning restore S1144 // Unused private types or members should be removed

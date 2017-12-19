@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using NUnit.Framework;
+using NUnit.Migrator.AssertionsAndConstraints;
 using NUnit.Migrator.Tests.Helpers;
 
 namespace NUnit.Migrator.Tests.Constraint
@@ -8,7 +9,7 @@ namespace NUnit.Migrator.Tests.Constraint
     [TestFixture]
     public class ConstraintAnalyzerTests : DiagnosticVerifier
     {
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer() => new ConstraintAnalyzer();
+        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer() => new MemberAccessBasedAnalyzer();
 
         private static ConstraintApiBreakingCase[] _textConstraintCases =
         {
@@ -98,7 +99,7 @@ namespace NUnit.Migrator.Tests.Constraint
         };
 
         [TestCaseSource(nameof(_textConstraintCases))]
-        public void ForGivenTextMemberAccess_Reports(ConstraintApiBreakingCase breakingCase)
+        public void ForGivenMemberAccess_Reports(ConstraintApiBreakingCase breakingCase)
         {
             var source = @"
 using NUnit.Framework;

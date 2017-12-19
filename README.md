@@ -26,7 +26,7 @@ For vast majority of breaking changes introduced by v3 of the framework this uti
  * :soon: - the feature is planned to be developed soon
  * :x: - there are no plans to develop the feature
 
-### Attributes
+###### Attributes
 
 |            Name              |          Notes                                        | :mag: | :bulb: |
 |------------------------------|-------------------------------------------------------|----------|------------|
@@ -50,8 +50,8 @@ For vast majority of breaking changes introduced by v3 of the framework this uti
 
 |          Feature                 |          Notes                                        | :mag: | :bulb: |
 |----------------------------------|-------------------------------------------------------|----------|------------|
-| Assert.IsNullOrEmpty             | No longer supported. Use `Assert.That(..., Is.Null.Or.Empty)` | :soon: | :soon: |
-| Assert.IsNotNullOrEmpty          | No longer supported. Use `Assert.That(..., Is.Not.Null.And.Not.Empty)` | :soon: | :soon: |
+| Assert.IsNullOrEmpty             | No longer supported. Use `Assert.That(..., Is.Null.Or.Empty)` | :white_check_mark: | :white_check_mark: |
+| Assert.IsNotNullOrEmpty          | No longer supported. Use `Assert.That(..., Is.Not.Null.And.Not.Empty)` | :white_check_mark: | :white_check_mark: |
 | Is.InstanceOfType                | No longer supported. Use `Is.InstanceOf`                    | :white_check_mark:  | :white_check_mark:  |
 | Is.StringStarting                | Deprecated. Use `Does.StartWith` | :white_check_mark:  | :white_check_mark:  |
 | Is.StringContaining              | Deprecated. Use `Does.Contain` | :white_check_mark:  | :white_check_mark:  |

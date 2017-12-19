@@ -26,5 +26,16 @@ namespace NUnit.Migrator
             description: "Various constraint forms have been replaced with newer ones (e.g. Is.* or Does.*) " +
                          "and are no longer supported. See: https://github.com/nunit/docs/wiki/Breaking-Changes, " +
                          "'Assertions and Constraints' section.");
+
+        public static readonly DiagnosticDescriptor Assertion = new DiagnosticDescriptor(
+            id: "NU2M03",
+            title: "Unsupported assertion (translatable to V3)",
+            messageFormat: "'{0}' assertion should be replaced with '{1}'.",
+            category: "Usage",
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true,
+            description: "Some assertion forms have been replaced with a newer one (Assert.That) " +
+                         "and are no longer supported. See: https://github.com/nunit/docs/wiki/Breaking-Changes, " +
+                         "'Assertions and Constraints' section.");
     }
 }

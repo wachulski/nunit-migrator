@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using NUnit.Framework;
+using NUnit.Migrator.AssertionsAndConstraints;
 using NUnit.Migrator.Tests.Helpers;
 
 namespace NUnit.Migrator.Tests.Constraint
@@ -8,9 +9,9 @@ namespace NUnit.Migrator.Tests.Constraint
     [TestFixture]
     public class ConstraintFixProviderTests : CodeFixVerifier
     {
-        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer() => new ConstraintAnalyzer();
+        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer() => new MemberAccessBasedAnalyzer();
 
-        protected override CodeFixProvider GetCSharpCodeFixProvider() => new ConstraintFixProvider();
+        protected override CodeFixProvider GetCSharpCodeFixProvider() => new MemberAccessBasedFixProvider();
 
         private static ConstraintApiFixCase[] _textConstraintCases =
         {

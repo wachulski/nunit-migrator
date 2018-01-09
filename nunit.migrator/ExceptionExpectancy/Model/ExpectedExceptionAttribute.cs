@@ -1,7 +1,7 @@
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Migrator.Helpers;
 
-namespace NUnit.Migrator.Model
+namespace NUnit.Migrator.ExceptionExpectancy.Model
 {
     /// <summary>
     /// <c>NUnit.Framework.ExpectedExceptionAttribute</c>. It was removed at all in v3 of the framework

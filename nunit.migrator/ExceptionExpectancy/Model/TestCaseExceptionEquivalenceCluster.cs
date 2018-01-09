@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Migrator.Helpers;
 
-namespace NUnit.Migrator.Model
+namespace NUnit.Migrator.ExceptionExpectancy.Model
 {
     internal class TestCaseExceptionEquivalenceCluster
     {
@@ -28,8 +28,7 @@ namespace NUnit.Migrator.Model
                 } ;
             }
 
-            return model.ExceptionRelatedAttributes
-                .OfType<TestCaseExpectingExceptionAttribute>()
+            return model.ExceptionRelatedAttributes.OfType<TestCaseExpectingExceptionAttribute>()
                 .GroupBy(tc => tc, Comparer.Instance)
                 .Select(g => new TestCaseExceptionEquivalenceCluster(g))
                 .ToArray();

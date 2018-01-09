@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Migrator.Helpers;
 
-namespace NUnit.Migrator.Model
+namespace NUnit.Migrator.ExceptionExpectancy.Model
 {
     internal class ExceptionExpectancyMethodModel
     {
@@ -104,8 +104,7 @@ namespace NUnit.Migrator.Model
             var attributesWithSymbols = GetAttributesWithSymbols(method, semanticModel);
             var expectedExceptionAttributes = GetExpectedExceptionAttributes(nunit, attributesWithSymbols);
             var doesExpectedExceptionAttributeAlsoExist = expectedExceptionAttributes.Any();
-            var testCaseAttributes = attributesWithSymbols.Where(
-                    x => IsTestCaseAttributeExpectingException(x.Attribute, x.Symbol, nunit,
+            var testCaseAttributes = attributesWithSymbols.Where(x => IsTestCaseAttributeExpectingException(x.Attribute, x.Symbol, nunit,
                         doesExpectedExceptionAttributeAlsoExist))
                 .Select(x => x.Attribute);
 

@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace NUnit.Migrator.Model
+namespace NUnit.Migrator.ExceptionExpectancy.Model
 {
     /// <summary>
     /// <c>NUnit.Framework.TestCaseAttribute</c> describing expectancy of an exception being thrown.

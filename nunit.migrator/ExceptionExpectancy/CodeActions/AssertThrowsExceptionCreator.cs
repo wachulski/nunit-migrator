@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Migrator.Helpers;
 
-namespace NUnit.Migrator.CodeActions
+namespace NUnit.Migrator.ExceptionExpectancy.CodeActions
 {
     internal class AssertThrowsExceptionCreator : IAssertExceptionBlockCreator
     {

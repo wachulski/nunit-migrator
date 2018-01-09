@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using NUnit.Migrator.CodeActions;
+using NUnit.Migrator.ExceptionExpectancy.CodeActions;
 using NUnit.Migrator.Helpers;
 
-namespace NUnit.Migrator
+namespace NUnit.Migrator.ExceptionExpectancy
 {
     [ExportCodeFixProvider(LanguageNames.CSharp), Shared]
     public class ExceptionExpectancyFixProvider : CodeFixProvider

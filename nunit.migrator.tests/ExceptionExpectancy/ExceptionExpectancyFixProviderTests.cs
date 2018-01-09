@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
+using NUnit.Migrator.ExceptionExpectancy;
 using NUnit.Migrator.Tests.Helpers;
 
 namespace NUnit.Migrator.Tests.ExceptionExpectancy

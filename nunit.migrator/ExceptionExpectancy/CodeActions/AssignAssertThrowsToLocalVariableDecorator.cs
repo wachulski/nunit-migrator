@@ -2,7 +2,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace NUnit.Migrator.CodeActions
+namespace NUnit.Migrator.ExceptionExpectancy.CodeActions
 {
     internal class AssignAssertThrowsToLocalVariableDecorator : AssertExceptionBlockDecorator
     {

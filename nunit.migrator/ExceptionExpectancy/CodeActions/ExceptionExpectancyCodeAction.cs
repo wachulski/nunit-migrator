@@ -8,10 +8,10 @@ using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Formatting;
+using NUnit.Migrator.ExceptionExpectancy.Model;
 using NUnit.Migrator.Helpers;
-using NUnit.Migrator.Model;
 
-namespace NUnit.Migrator.CodeActions
+namespace NUnit.Migrator.ExceptionExpectancy.CodeActions
 {
     /// <summary>
     /// Removes exception related attributes and/or attribute arguments and produces equivalent test (case) method(s)
@@ -75,10 +75,8 @@ namespace NUnit.Migrator.CodeActions
             var testCasesToRemain = cluster.EquivalentItems.Select(i => i.AttributeNode).ToArray();
             var exceptionExpectancy = cluster.EquivalentItems.First();
 
-            var clusterMethod = _method
-                .WithoutExceptionExpectancyInAttributes(testCasesToRemain)
-                .WithBody(CreateAssertedBlock(exceptionExpectancy))
-                .WithTrailingTrivia(CreateClusterMethodTrailingTrivia(cluster))
+            var clusterMethod = _method.WithoutExceptionExpectancyInAttributes(testCasesToRemain)
+                .WithBody(CreateAssertedBlock(exceptionExpectancy)).WithTrailingTrivia(CreateClusterMethodTrailingTrivia(cluster))
                 .WithIdentifier(testMethodNamer.CreateName(exceptionExpectancy, clustersCount));
 
             return clusterMethod;
@@ -94,8 +92,7 @@ namespace NUnit.Migrator.CodeActions
         private BlockSyntax CreateAssertedBlock(ExceptionExpectancyAtAttributeLevel exceptionExpectancy)
         {
             return exceptionExpectancy.GetAssertExceptionBlockCreator()
-                .Create(_method, exceptionExpectancy.AssertedExceptionType)
-                .WithAdditionalAnnotations(Formatter.Annotation);
+                .Create(_method, exceptionExpectancy.AssertedExceptionType).WithAdditionalAnnotations(Formatter.Annotation);
         }
 
         private bool TryProduceExceptionUnrelatedTestMethod(out MethodDeclarationSyntax fixedExceptionUnrelatedMethod)
@@ -106,9 +103,7 @@ namespace NUnit.Migrator.CodeActions
                 return false;
             }
 
-            fixedExceptionUnrelatedMethod = _method
-                .WithoutExceptionExpectancyInAttributes(_model.ExceptionFreeTestCaseAttributeNodes)
-                .WithTrailingTrivia(_methodLineSeparator);
+            fixedExceptionUnrelatedMethod = _method.WithoutExceptionExpectancyInAttributes(_model.ExceptionFreeTestCaseAttributeNodes).WithTrailingTrivia(_methodLineSeparator);
 
             return true;
         }

@@ -1,6 +1,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using NUnit.Framework;
+using NUnit.Migrator.ExceptionExpectancy;
 using NUnit.Migrator.Tests.Helpers;
 using DiagnosticVerifier = NUnit.Migrator.Tests.Helpers.DiagnosticVerifier;
 

@@ -3,10 +3,10 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using NUnit.Migrator.CodeActions;
+using NUnit.Migrator.ExceptionExpectancy.CodeActions;
 using NUnit.Migrator.Helpers;
 
-namespace NUnit.Migrator.Model
+namespace NUnit.Migrator.ExceptionExpectancy.Model
 {
     /// <summary>
     /// Expectancy of an exception being thrown in a test method expressed at attribute level. Either
@@ -63,7 +63,7 @@ namespace NUnit.Migrator.Model
         protected static void ParseAttributeArguments(AttributeSyntax attribute,
             ArgumentParseAction argumentParseAction)
         {
-            Debug.Assert(attribute != null, "attribute != null");
+            Debug.Assert(attribute != null, nameof(attribute) + " != null");
 
             if (attribute.ArgumentList == null || !attribute.ArgumentList.Arguments.Any())
                 return;

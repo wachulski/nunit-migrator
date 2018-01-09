@@ -3,10 +3,10 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
+using NUnit.Migrator.ExceptionExpectancy.Model;
 using NUnit.Migrator.Helpers;
-using NUnit.Migrator.Model;
 
-namespace NUnit.Migrator
+namespace NUnit.Migrator.ExceptionExpectancy
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class ExceptionExpectancyAnalyzer : DiagnosticAnalyzer

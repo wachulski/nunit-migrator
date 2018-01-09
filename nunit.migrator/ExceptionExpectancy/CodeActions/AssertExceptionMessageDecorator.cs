@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using NUnit.Migrator.ExceptionExpectancy.Model;
 using NUnit.Migrator.Helpers;
-using NUnit.Migrator.Model;
 
-namespace NUnit.Migrator.CodeActions
+namespace NUnit.Migrator.ExceptionExpectancy.CodeActions
 {
     internal class AssertExceptionMessageDecorator : AssertExceptionBlockDecorator
     {

@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis;
 namespace NUnit.Migrator.Helpers
 {
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    [SuppressMessage("S1144", "Unused private types or members should be removed")]
+#pragma warning disable S1144 // Unused private types or members should be removed
     internal static class NUnitFramework
     {
         public const string TestCaseAttributeSimpleName = "TestCase";
@@ -20,6 +20,8 @@ namespace NUnit.Migrator.Helpers
         private const string AssertQualifiedName = "NUnit.Framework.Assert";
         private const string TestCaseSourceQualifiedName = "NUnit.Framework.TestCaseSourceAttribute";
         private const string ValueSourceQualifiedName = "NUnit.Framework.ValueSourceAttribute";
+        private const string SuiteAttributeQualifiedName = "NUnit.Framework.SuiteAttribute";
+        private const string RequiredAddinAttributeQualifiedName = "NUnit.Framework.RequiredAddinAttribute";
 
         internal static class Assert
         {
@@ -74,14 +76,20 @@ namespace NUnit.Migrator.Helpers
 
             public INamedTypeSymbol ValueSource { get; private set; }
 
-            private bool ArePresent => 
-                ExpectedException != null 
+            public INamedTypeSymbol Suite { get; private set; }
+
+            public INamedTypeSymbol RequiredAddin { get; private set; }
+
+            private bool ArePresent =>
+                ExpectedException != null
                 && TestCase != null
                 && Text != null
                 && Is != null
                 && Assert != null
                 && TestCaseSource != null
-                && ValueSource != null;
+                && ValueSource != null
+                && Suite != null
+                && RequiredAddin != null;
 
             internal static bool TryGetNUnitSymbols(Compilation compilation, out Symbols nunit)
             {
@@ -94,11 +102,13 @@ namespace NUnit.Migrator.Helpers
                     Assert = compilation.GetTypeByMetadataName(AssertQualifiedName),
                     TestCaseSource = compilation.GetTypeByMetadataName(TestCaseSourceQualifiedName),
                     ValueSource = compilation.GetTypeByMetadataName(ValueSourceQualifiedName),
+                    Suite = compilation.GetTypeByMetadataName(SuiteAttributeQualifiedName),
+                    RequiredAddin = compilation.GetTypeByMetadataName(RequiredAddinAttributeQualifiedName),
                 };
 
                 return nunit.ArePresent;
             }
         }
     }
-
+#pragma warning restore S1144 // Unused private types or members should be removed
 }

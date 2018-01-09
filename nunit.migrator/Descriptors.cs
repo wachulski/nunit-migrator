@@ -47,5 +47,15 @@ namespace NUnit.Migrator
             isEnabledByDefault: true,
             description: "The TestCaseSource and ValueSource attributes must refer only to static fields, " +
                          "properties or methods.");
+
+        public static readonly DiagnosticDescriptor NoLongerSupportedAttribute = new DiagnosticDescriptor(
+            id: "NU2M05",
+            title: "Attribute no longer supported.",
+            messageFormat: "'{0}' attribute is no longer supported.",
+            category: "Usage",
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true,
+            description: "Various NUnit attributes are no longer supported. " +
+                         "See: https://github.com/nunit/docs/wiki/Breaking-Changes, 'Attributes' section.");
     }
 }

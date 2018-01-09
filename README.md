@@ -32,10 +32,10 @@ For vast majority of breaking changes introduced by v3 of the framework this uti
 |------------------------------|-------------------------------------------------------|----------|------------|
 | ExpectedExceptionAttribute   | No longer supported. Use `Assert.Throws` or `Assert.That`. | :white_check_mark: | :white_check_mark: |
 | IgnoreAttribute              | The reason is now mandatory | :soon: | :x: |
-| RequiredAddinAttribute       | No longer supported. | :soon: | :x: |
+| RequiredAddinAttribute       | No longer supported. | :white_check_mark: | :x: |
 | RequiresMTAAttribute         | Deprecated. Use `ApartmentAttribute`                    | :soon: | :soon: |
 | RequiresSTAAttribute         | Deprecated. Use `ApartmentAttribute`                    | :soon: | :soon: |
-| SuiteAttribute               | No longer supported. | :soon: | :x: |
+| SuiteAttribute               | No longer supported. | :white_check_mark: | :x: |
 | System.MTAThreadAttribute    | No longer treated as `RequiresMTAAttribute`             | :soon: | :x: |
 | System.STAThreadAttribute    | No longer treated as `RequiresSTAAttribute`             | :soon: | :x: |
 | TearDown and OneTimeTearDown | There is a change to the logic by which teardown methods are called. | :soon: | :x: |

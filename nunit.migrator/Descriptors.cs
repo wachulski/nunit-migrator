@@ -37,5 +37,15 @@ namespace NUnit.Migrator
             description: "Some assertion forms have been replaced with a newer one (Assert.That) " +
                          "and are no longer supported. See: https://github.com/nunit/docs/wiki/Breaking-Changes, " +
                          "'Assertions and Constraints' section.");
+
+        public static readonly DiagnosticDescriptor StaticSource = new DiagnosticDescriptor(
+            id: "NU2M04",
+            title: "Source attributes must refer only to static members.",
+            messageFormat: "{0} attribute refers to '{1}' which is not static.",
+            category: "Usage",
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true,
+            description: "The TestCaseSource and ValueSource attributes must refer only to static fields, " +
+                         "properties or methods.");
     }
 }

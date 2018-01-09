@@ -3,6 +3,8 @@ using Microsoft.CodeAnalysis;
 
 namespace NUnit.Migrator.Helpers
 {
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    [SuppressMessage("S1144", "Unused private types or members should be removed")]
     internal static class NUnitFramework
     {
         public const string TestCaseAttributeSimpleName = "TestCase";
@@ -16,6 +18,8 @@ namespace NUnit.Migrator.Helpers
         private const string TextConstraintsQualifiedName = "NUnit.Framework.Text";
         private const string IsConstraintsQualifiedName = "NUnit.Framework.Is";
         private const string AssertQualifiedName = "NUnit.Framework.Assert";
+        private const string TestCaseSourceQualifiedName = "NUnit.Framework.TestCaseSourceAttribute";
+        private const string ValueSourceQualifiedName = "NUnit.Framework.ValueSourceAttribute";
 
         internal static class Assert
         {
@@ -66,7 +70,18 @@ namespace NUnit.Migrator.Helpers
 
             public INamedTypeSymbol Assert { get; private set; }
 
-            private bool ArePresent => ExpectedException != null && TestCase != null;
+            public INamedTypeSymbol TestCaseSource { get; private set; }
+
+            public INamedTypeSymbol ValueSource { get; private set; }
+
+            private bool ArePresent => 
+                ExpectedException != null 
+                && TestCase != null
+                && Text != null
+                && Is != null
+                && Assert != null
+                && TestCaseSource != null
+                && ValueSource != null;
 
             internal static bool TryGetNUnitSymbols(Compilation compilation, out Symbols nunit)
             {
@@ -77,6 +92,8 @@ namespace NUnit.Migrator.Helpers
                     Text = compilation.GetTypeByMetadataName(TextConstraintsQualifiedName),
                     Is = compilation.GetTypeByMetadataName(IsConstraintsQualifiedName),
                     Assert = compilation.GetTypeByMetadataName(AssertQualifiedName),
+                    TestCaseSource = compilation.GetTypeByMetadataName(TestCaseSourceQualifiedName),
+                    ValueSource = compilation.GetTypeByMetadataName(ValueSourceQualifiedName),
                 };
 
                 return nunit.ArePresent;

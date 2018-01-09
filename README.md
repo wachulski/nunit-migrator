@@ -40,11 +40,11 @@ For vast majority of breaking changes introduced by v3 of the framework this uti
 | System.STAThreadAttribute    | No longer treated as `RequiresSTAAttribute`             | :soon: | :x: |
 | TearDown and OneTimeTearDown | There is a change to the logic by which teardown methods are called. | :soon: | :x: |
 | TestCaseAttribute            | Named parameter `Result=` is no longer supported. Use `ExpectedResult=`. Named parameter `Ignore=` now takes a string, giving the reason for ignoring the test.| :soon:  | :soon: |
-| TestCaseSourceAttribute      | The attribute forms using a string argument to refer to the data source must now use only static fields, properties or methods. | :soon: | :x: |
+| TestCaseSourceAttribute      | The attribute forms using a string argument to refer to the data source must now use only static fields, properties or methods. | :white_check_mark: | :x: |
 | TestFixtureAttribute         | Named parameter `Ignore=` now takes a string, giving the reason for ignoring the test. | :soon:  | :x: |
 | TestFixtureSetUpAttribute    | Deprecated. Use `OneTimeSetUpAttribute`.  | :soon: | :soon: |
 | TestFixtureTearDownAttribute | Deprecated. Use `OneTimeTearDownAttribute`.  | :soon: | :soon: |
-| ValueSourceAttribute         | The source name of the data source must now use only static fields, properties or  methods. | :soon: | :x: |
+| ValueSourceAttribute         | The source name of the data source must now use only static fields, properties or  methods. | :white_check_mark: | :x: |
 
 ###### Assertions and Constraints
 

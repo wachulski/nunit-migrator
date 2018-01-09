@@ -23,7 +23,8 @@ if ($step -eq 'begin') {
     /d:"sonar.host.url=https://sonarqube.com" `
     /d:"sonar.organization=wachulski-github" `
     /d:"sonar.login=$sonarLogin" `
-    /d:"sonar.cs.dotcover.reportsPaths=dotCover.html"
+    /d:"sonar.cs.dotcover.reportsPaths=dotCover.html" `
+    /d:"sonar.msbuild.testProjectPattern=nunit\.migrator\.tests"
 }
 elseif ($step -eq 'end') {
     SonarQube.Scanner.MSBuild end /d:"sonar.login=$sonarLogin"

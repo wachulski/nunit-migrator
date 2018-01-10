@@ -30,7 +30,8 @@ namespace NUnit.Migrator.Attributes
             }
         }
 
-        internal override INamedTypeSymbol[] GetAnalyzedAttributeSymbols(NUnitFramework.Symbols nunit)
+        internal override INamedTypeSymbol[] GetAnalyzedAttributeSymbols(NUnitFramework.Symbols nunit,
+            Compilation compilation)
         {
             return new[]
             {

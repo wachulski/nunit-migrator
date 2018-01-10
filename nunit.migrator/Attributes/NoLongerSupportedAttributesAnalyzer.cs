@@ -11,7 +11,8 @@ namespace NUnit.Migrator.Attributes
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(
             Descriptors.NoLongerSupportedAttribute);
 
-        internal override INamedTypeSymbol[] GetAnalyzedAttributeSymbols(NUnitFramework.Symbols nunit)
+        internal override INamedTypeSymbol[] GetAnalyzedAttributeSymbols(NUnitFramework.Symbols nunit,
+            Compilation compilation)
         {
             return new[]
             {

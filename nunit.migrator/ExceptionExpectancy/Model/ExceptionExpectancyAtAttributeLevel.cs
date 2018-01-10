@@ -63,9 +63,7 @@ namespace NUnit.Migrator.ExceptionExpectancy.Model
         protected static void ParseAttributeArguments(AttributeSyntax attribute,
             ArgumentParseAction argumentParseAction)
         {
-            Debug.Assert(attribute != null, nameof(attribute) + " != null");
-
-            if (attribute.ArgumentList == null || !attribute.ArgumentList.Arguments.Any())
+            if (attribute?.ArgumentList == null || !attribute.ArgumentList.Arguments.Any())
                 return;
 
             foreach (var argument in attribute.ArgumentList.Arguments)

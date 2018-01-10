@@ -17,11 +17,12 @@ namespace NUnit.Migrator.Attributes
                     return; 
 
                 ctx.RegisterSyntaxNodeAction(syntaxNodeContext =>
-                    CheckAttributeSymbolsAndAnalyze(syntaxNodeContext, nunit), SyntaxKind.Attribute);
+                    CheckAttributeSymbolsAndAnalyze(syntaxNodeContext, nunit, ctx.Compilation), SyntaxKind.Attribute);
             });
         }
 
-        internal abstract INamedTypeSymbol[] GetAnalyzedAttributeSymbols(NUnitFramework.Symbols nunit);
+        internal abstract INamedTypeSymbol[] GetAnalyzedAttributeSymbols(NUnitFramework.Symbols nunit,
+            Compilation compilation);
 
         protected virtual void Analyze(SyntaxNodeAnalysisContext context, AttributeSyntax attributeSyntax)
         {
@@ -31,22 +32,23 @@ namespace NUnit.Migrator.Attributes
                 SupportedDiagnostics.First(), attributeLocation, attributeSyntax.Name.ToString()));
         }
 
-        private void CheckAttributeSymbolsAndAnalyze(SyntaxNodeAnalysisContext context, NUnitFramework.Symbols nunit)
+        private void CheckAttributeSymbolsAndAnalyze(SyntaxNodeAnalysisContext context, NUnitFramework.Symbols nunit,
+            Compilation compilation)
         {
             var attributeSyntax = (AttributeSyntax) context.Node;
             var semanticModel = context.SemanticModel;
 
-            if (!IsNUnitAttributeSymbol(attributeSyntax, nunit, semanticModel))
+            if (!IsNUnitAttributeSymbol(attributeSyntax, nunit, semanticModel, compilation))
                 return;
 
             Analyze(context, attributeSyntax);
         }
 
-        private bool IsNUnitAttributeSymbol(AttributeSyntax attributeSyntax, 
-            NUnitFramework.Symbols nunit, SemanticModel semanticModel)
+        private bool IsNUnitAttributeSymbol(AttributeSyntax attributeSyntax,
+            NUnitFramework.Symbols nunit, SemanticModel semanticModel, Compilation compilation)
         {
             var attributeSymbol = semanticModel.GetSymbolInfo(attributeSyntax).Symbol?.ContainingSymbol;
-            var analyzedAttributeSymbols = GetAnalyzedAttributeSymbols(nunit);
+            var analyzedAttributeSymbols = GetAnalyzedAttributeSymbols(nunit, compilation);
 
             return analyzedAttributeSymbols.Any(analyzedAttr => analyzedAttr.Equals(attributeSymbol));
         }

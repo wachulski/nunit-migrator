@@ -36,8 +36,8 @@ For vast majority of breaking changes introduced by v3 of the framework this uti
 | RequiresMTAAttribute         | Deprecated. Use `ApartmentAttribute`                    | :soon: | :soon: |
 | RequiresSTAAttribute         | Deprecated. Use `ApartmentAttribute`                    | :soon: | :soon: |
 | SuiteAttribute               | No longer supported. | :white_check_mark: | :x: |
-| System.MTAThreadAttribute    | No longer treated as `RequiresMTAAttribute`             | :soon: | :x: |
-| System.STAThreadAttribute    | No longer treated as `RequiresSTAAttribute`             | :soon: | :x: |
+| System.MTAThreadAttribute    | No longer treated as `RequiresMTAAttribute`             | :white_check_mark: | :x: |
+| System.STAThreadAttribute    | No longer treated as `RequiresSTAAttribute`             | :white_check_mark: | :x: |
 | TearDown and OneTimeTearDown | There is a change to the logic by which teardown methods are called. | :soon: | :x: |
 | TestCaseAttribute            | Named parameter `Result=` is no longer supported. Use `ExpectedResult=`. Named parameter `Ignore=` now takes a string, giving the reason for ignoring the test.| :soon:  | :soon: |
 | TestCaseSourceAttribute      | The attribute forms using a string argument to refer to the data source must now use only static fields, properties or methods. | :white_check_mark: | :x: |

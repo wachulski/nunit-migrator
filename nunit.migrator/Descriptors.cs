@@ -57,5 +57,15 @@ namespace NUnit.Migrator
             isEnabledByDefault: true,
             description: "Various NUnit attributes are no longer supported. " +
                          "See: https://github.com/nunit/docs/wiki/Breaking-Changes, 'Attributes' section.");
+
+        public static readonly DiagnosticDescriptor AttributeChangedSemantic = new DiagnosticDescriptor(
+            id: "NU2M06",
+            title: "Attribute no longer has the semantic it used to have in the previous version.",
+            messageFormat: "'{0}' attribute is no longer treated as '{1}'.",
+            category: "Usage",
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true,
+            description: "Some attributes changed their meaning in the new version of the library. " +
+                         "See: https://github.com/nunit/docs/wiki/Breaking-Changes, 'Attributes' section.");
     }
 }

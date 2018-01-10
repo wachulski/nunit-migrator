@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) with a modification that takes CI/CD to
 the extreme point. This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+* [0.7.0] [2018-01-10] [Added]   MTAThread and STAThread attributes analyzer.
 * [0.6.0] [2018-01-09] [Added]   No longer supported attributes analyzer.
 * [0.5.0] [2018-01-09] [Added]   TestCaseSource and ValueSource analyzer.
 * [0.4.0] [2018-01-09] [Added]   Assertion migrations.

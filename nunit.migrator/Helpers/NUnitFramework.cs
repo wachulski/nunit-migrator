@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis;
 namespace NUnit.Migrator.Helpers
 {
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
 #pragma warning disable S1144 // Unused private types or members should be removed
     internal static class NUnitFramework
     {
@@ -22,6 +23,10 @@ namespace NUnit.Migrator.Helpers
         private const string ValueSourceQualifiedName = "NUnit.Framework.ValueSourceAttribute";
         private const string SuiteAttributeQualifiedName = "NUnit.Framework.SuiteAttribute";
         private const string RequiredAddinAttributeQualifiedName = "NUnit.Framework.RequiredAddinAttribute";
+        private const string RequiresMTAAttributeQualifiedName = "NUnit.Framework.RequiresMTAAttribute";
+        private const string RequiresSTAAttributeQualifiedName = "NUnit.Framework.RequiresSTAAttribute";
+        private const string TestFixtureSetUpAttributeQualifiedName = "NUnit.Framework.TestFixtureSetUpAttribute";
+        private const string TestFixtureTearDownAttributeQualifiedName = "NUnit.Framework.TestFixtureTearDownAttribute";
 
         internal static class Assert
         {
@@ -80,6 +85,14 @@ namespace NUnit.Migrator.Helpers
 
             public INamedTypeSymbol RequiredAddin { get; private set; }
 
+            public INamedTypeSymbol RequiresMTA { get; private set; }
+
+            public INamedTypeSymbol RequiresSTA { get; private set; }
+
+            public INamedTypeSymbol TestFixtureSetUp { get; private set; }
+
+            public INamedTypeSymbol TestFixtureTearDown { get; private set; }
+
             private bool ArePresent =>
                 ExpectedException != null
                 && TestCase != null
@@ -89,7 +102,11 @@ namespace NUnit.Migrator.Helpers
                 && TestCaseSource != null
                 && ValueSource != null
                 && Suite != null
-                && RequiredAddin != null;
+                && RequiredAddin != null
+                && RequiresMTA != null
+                && RequiresSTA != null
+                && TestFixtureSetUp != null
+                && TestFixtureTearDown != null;
 
             internal static bool TryGetNUnitSymbols(Compilation compilation, out Symbols nunit)
             {
@@ -104,6 +121,10 @@ namespace NUnit.Migrator.Helpers
                     ValueSource = compilation.GetTypeByMetadataName(ValueSourceQualifiedName),
                     Suite = compilation.GetTypeByMetadataName(SuiteAttributeQualifiedName),
                     RequiredAddin = compilation.GetTypeByMetadataName(RequiredAddinAttributeQualifiedName),
+                    RequiresMTA = compilation.GetTypeByMetadataName(RequiresMTAAttributeQualifiedName),
+                    RequiresSTA = compilation.GetTypeByMetadataName(RequiresSTAAttributeQualifiedName),
+                    TestFixtureSetUp = compilation.GetTypeByMetadataName(TestFixtureSetUpAttributeQualifiedName),
+                    TestFixtureTearDown = compilation.GetTypeByMetadataName(TestFixtureTearDownAttributeQualifiedName),
                 };
 
                 return nunit.ArePresent;

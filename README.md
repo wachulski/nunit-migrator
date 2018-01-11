@@ -33,8 +33,8 @@ For vast majority of breaking changes introduced by v3 of the framework this uti
 | ExpectedExceptionAttribute   | No longer supported. Use `Assert.Throws` or `Assert.That`. | :white_check_mark: | :white_check_mark: |
 | IgnoreAttribute              | The reason is now mandatory | :soon: | :x: |
 | RequiredAddinAttribute       | No longer supported. | :white_check_mark: | :x: |
-| RequiresMTAAttribute         | Deprecated. Use `ApartmentAttribute`                    | :soon: | :soon: |
-| RequiresSTAAttribute         | Deprecated. Use `ApartmentAttribute`                    | :soon: | :soon: |
+| RequiresMTAAttribute         | Deprecated. Use `ApartmentAttribute`                    | :white_check_mark: | :white_check_mark: |
+| RequiresSTAAttribute         | Deprecated. Use `ApartmentAttribute`                    | :white_check_mark: | :white_check_mark: |
 | SuiteAttribute               | No longer supported. | :white_check_mark: | :x: |
 | System.MTAThreadAttribute    | No longer treated as `RequiresMTAAttribute`             | :white_check_mark: | :x: |
 | System.STAThreadAttribute    | No longer treated as `RequiresSTAAttribute`             | :white_check_mark: | :x: |
@@ -42,8 +42,8 @@ For vast majority of breaking changes introduced by v3 of the framework this uti
 | TestCaseAttribute            | Named parameter `Result=` is no longer supported. Use `ExpectedResult=`. Named parameter `Ignore=` now takes a string, giving the reason for ignoring the test.| :soon:  | :soon: |
 | TestCaseSourceAttribute      | The attribute forms using a string argument to refer to the data source must now use only static fields, properties or methods. | :white_check_mark: | :x: |
 | TestFixtureAttribute         | Named parameter `Ignore=` now takes a string, giving the reason for ignoring the test. | :soon:  | :x: |
-| TestFixtureSetUpAttribute    | Deprecated. Use `OneTimeSetUpAttribute`.  | :soon: | :soon: |
-| TestFixtureTearDownAttribute | Deprecated. Use `OneTimeTearDownAttribute`.  | :soon: | :soon: |
+| TestFixtureSetUpAttribute    | Deprecated. Use `OneTimeSetUpAttribute`.  | :white_check_mark: | :white_check_mark: |
+| TestFixtureTearDownAttribute | Deprecated. Use `OneTimeTearDownAttribute`.  | :white_check_mark: | :white_check_mark: |
 | ValueSourceAttribute         | The source name of the data source must now use only static fields, properties or  methods. | :white_check_mark: | :x: |
 
 ###### Assertions and Constraints

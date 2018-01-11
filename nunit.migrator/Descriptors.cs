@@ -67,5 +67,15 @@ namespace NUnit.Migrator
             isEnabledByDefault: true,
             description: "Some attributes changed their meaning in the new version of the library. " +
                          "See: https://github.com/nunit/docs/wiki/Breaking-Changes, 'Attributes' section.");
+
+        public static readonly DiagnosticDescriptor DeprecatedReplaceableAttribute = new DiagnosticDescriptor(
+            id: "NU2M07",
+            title: "Attribute is deprected but can be easily replaced with a proper one from the new API.",
+            messageFormat: "'{0}' attribute is deprecated and should be replaced with '{1}'.",
+            category: "Usage",
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true,
+            description: "Some attributes have been deprecated and for some replacements exist. " +
+                         "See: https://github.com/nunit/docs/wiki/Breaking-Changes, 'Attributes' section.");
     }
 }

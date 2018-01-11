@@ -8,6 +8,8 @@ namespace NUnit.Migrator.Helpers
 {
     internal static class SyntaxHelper
     {
+        internal delegate void ArgumentParseAction(string nameEquals, ExpressionSyntax expression);
+
         public static MethodDeclarationSyntax WithoutExceptionExpectancyInAttributes(
             this MethodDeclarationSyntax method, AttributeSyntax[] testCasesToRemain)
         {
@@ -24,6 +26,20 @@ namespace NUnit.Migrator.Helpers
         internal static TypeSyntax[] GetAllBaseTypes(BaseTypeDeclarationSyntax typeDeclaration)
         {
             return typeDeclaration.BaseList?.Types.Select(t => t.Type).ToArray() ?? new TypeSyntax[] {};
+        }
+
+        internal static void ParseAttributeArguments(AttributeSyntax attribute,
+            ArgumentParseAction argumentParseAction)
+        {
+            if (attribute?.ArgumentList == null || !attribute.ArgumentList.Arguments.Any())
+                return;
+
+            foreach (var argument in attribute.ArgumentList.Arguments)
+            {
+                var nameEquals = argument.NameEquals?.Name?.Identifier.ValueText;
+
+                argumentParseAction(nameEquals, argument.Expression);
+            }
         }
 
         private static IEnumerable<SyntaxNode> GetEmptyAttributeArgumentLists(BaseMethodDeclarationSyntax resultMethod)

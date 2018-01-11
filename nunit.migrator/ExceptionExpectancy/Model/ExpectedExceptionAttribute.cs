@@ -12,7 +12,7 @@ namespace NUnit.Migrator.ExceptionExpectancy.Model
     {
         public ExpectedExceptionAttribute(AttributeSyntax attribute) : base(attribute)
         {
-            ParseAttributeArguments(attribute, ParseAttributeArgumentSyntax);
+            SyntaxHelper.ParseAttributeArguments(attribute, ParseAttributeArgumentSyntax);
         }
 
         private void ParseAttributeArgumentSyntax(string nameEquals, ExpressionSyntax expression)

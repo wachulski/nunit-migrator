@@ -23,7 +23,7 @@ namespace NUnit.Migrator.ExceptionExpectancy.Model
         {
             AttributeNode = attribute ?? throw new ArgumentNullException(nameof(attribute));
 
-            ParseAttributeArguments(attribute, ParseAttributeArgumentSyntax);
+            SyntaxHelper.ParseAttributeArguments(attribute, ParseAttributeArgumentSyntax);
             ParseTestFixtureClass(attribute.FirstAncestorOrSelf<ClassDeclarationSyntax>());
         }
 
@@ -57,20 +57,6 @@ namespace NUnit.Migrator.ExceptionExpectancy.Model
                 creator = new AssertUserMessageDecorator(creator, this);
 
             return creator;
-        }
-
-        protected static void ParseAttributeArguments(AttributeSyntax attribute,
-            ArgumentParseAction argumentParseAction)
-        {
-            if (attribute?.ArgumentList == null || !attribute.ArgumentList.Arguments.Any())
-                return;
-
-            foreach (var argument in attribute.ArgumentList.Arguments)
-            {
-                var nameEquals = argument.NameEquals?.Name?.Identifier.ValueText;
-
-                argumentParseAction(nameEquals, argument.Expression);
-            }
         }
 
         private void ParseTestFixtureClass(BaseTypeDeclarationSyntax classDeclaration)
@@ -112,7 +98,5 @@ namespace NUnit.Migrator.ExceptionExpectancy.Model
                     break;
             }
         }
-
-        protected delegate void ArgumentParseAction(string nameEquals, ExpressionSyntax expression);
     }
 }

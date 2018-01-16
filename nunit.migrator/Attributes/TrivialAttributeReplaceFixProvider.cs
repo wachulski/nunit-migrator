@@ -72,8 +72,9 @@ namespace NUnit.Migrator.Attributes
                         SyntaxFactory.ParseAttributeArgumentList(argumentsList));
                 }
 
-                var newRoot = _root.ReplaceNode(_attributeSyntax, newAttribute)
-                    .WithAdditionalAnnotations(Formatter.Annotation);
+                newAttribute = newAttribute.WithAdditionalAnnotations(Formatter.Annotation);
+
+                var newRoot = _root.ReplaceNode(_attributeSyntax, newAttribute);
 
                 return Task.FromResult(_document.WithSyntaxRoot(newRoot));
             }

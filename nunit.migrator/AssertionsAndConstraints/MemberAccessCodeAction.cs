@@ -32,8 +32,8 @@ namespace NUnit.Migrator.AssertionsAndConstraints
         protected override async Task<Document> GetChangedDocumentAsync(CancellationToken cancellationToken)
         {
             var root = await _document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
-            var newRoot = root.ReplaceNode(_container, _fixedContainer.Value)
-                .WithAdditionalAnnotations(Formatter.Annotation);
+            var fixedMemberAccessContainer = _fixedContainer.Value.WithAdditionalAnnotations(Formatter.Annotation);
+            var newRoot = root.ReplaceNode(_container, fixedMemberAccessContainer);
 
             return _document.WithSyntaxRoot(newRoot);
         }

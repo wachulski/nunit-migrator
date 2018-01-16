@@ -57,8 +57,7 @@ namespace NUnit.Migrator.Attributes
                 var newArgument = SyntaxFactory.AttributeArgument(SyntaxFactory.NameEquals(_targetString), 
                     _argumentSyntax.NameColon, _argumentSyntax.Expression);
 
-                var newRoot = _root.ReplaceNode(_argumentSyntax, newArgument)
-                    .WithAdditionalAnnotations(Formatter.Annotation);
+                var newRoot = _root.ReplaceNode(_argumentSyntax, newArgument);
 
                 return Task.FromResult(_document.WithSyntaxRoot(newRoot));
             }

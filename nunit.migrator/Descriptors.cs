@@ -4,6 +4,9 @@ namespace NUnit.Migrator
 {
     internal static class Descriptors
     {
+        private const string DocLinkAttributesSection = "See: https://github.com/nunit/docs/wiki/Breaking-Changes, 'Attributes' section.";
+        private const string DocLinkAssertionsAndConstraintsSection = "See: https://github.com/nunit/docs/wiki/Breaking-Changes, 'Assertions and Constraints' section.";
+
         public static readonly DiagnosticDescriptor ExceptionExpectancy = new DiagnosticDescriptor(
             id: "NU2M01",
             title: "Exception expectancy at attribute level",
@@ -23,9 +26,8 @@ namespace NUnit.Migrator
             category: "Usage",
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true,
-            description: "Various constraint forms have been replaced with newer ones (e.g. Is.* or Does.*) " +
-                         "and are no longer supported. See: https://github.com/nunit/docs/wiki/Breaking-Changes, " +
-                         "'Assertions and Constraints' section.");
+            description: "Various constraint forms have been replaced with newer ones (e.g. Is.* or Does.*) " 
+                         + "and are no longer supported. " + DocLinkAssertionsAndConstraintsSection);
 
         public static readonly DiagnosticDescriptor Assertion = new DiagnosticDescriptor(
             id: "NU2M03",
@@ -34,9 +36,8 @@ namespace NUnit.Migrator
             category: "Usage",
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true,
-            description: "Some assertion forms have been replaced with a newer one (Assert.That) " +
-                         "and are no longer supported. See: https://github.com/nunit/docs/wiki/Breaking-Changes, " +
-                         "'Assertions and Constraints' section.");
+            description: "Some assertion forms have been replaced with a newer one (Assert.That) " 
+                         + "and are no longer supported. " + DocLinkAssertionsAndConstraintsSection);
 
         public static readonly DiagnosticDescriptor StaticSource = new DiagnosticDescriptor(
             id: "NU2M04",
@@ -56,7 +57,7 @@ namespace NUnit.Migrator
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true,
             description: "Various NUnit attributes are no longer supported. " +
-                         "See: https://github.com/nunit/docs/wiki/Breaking-Changes, 'Attributes' section.");
+                         DocLinkAttributesSection);
 
         public static readonly DiagnosticDescriptor AttributeChangedSemantic = new DiagnosticDescriptor(
             id: "NU2M06",
@@ -66,7 +67,7 @@ namespace NUnit.Migrator
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true,
             description: "Some attributes changed their meaning in the new version of the library. " +
-                         "See: https://github.com/nunit/docs/wiki/Breaking-Changes, 'Attributes' section.");
+                         DocLinkAttributesSection);
 
         public static readonly DiagnosticDescriptor DeprecatedReplaceableAttribute = new DiagnosticDescriptor(
             id: "NU2M07",
@@ -76,7 +77,7 @@ namespace NUnit.Migrator
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true,
             description: "Some attributes have been deprecated and for some replacements exist. " +
-                         "See: https://github.com/nunit/docs/wiki/Breaking-Changes, 'Attributes' section.");
+                         DocLinkAttributesSection);
 
         public static readonly DiagnosticDescriptor DeprecatedReplaceableAttributeArgument = new DiagnosticDescriptor(
             id: "NU2M08",
@@ -86,6 +87,16 @@ namespace NUnit.Migrator
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true,
             description: "Some attribute arguments have been deprecated and for some replacements exist. " +
-                         "See: https://github.com/nunit/docs/wiki/Breaking-Changes, 'Attributes' section.");
+                         DocLinkAttributesSection);
+
+        public static readonly DiagnosticDescriptor IgnoreReason = new DiagnosticDescriptor(
+            id: "NU2M09",
+            title: "Ignore reason is mandatory.",
+            messageFormat: "{0}",
+            category: "Usage",
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true,
+            description: "Ignoring particular tests or whole fixtures should have it reason explicitly stated. " +
+                         DocLinkAttributesSection);
     }
 }

@@ -27,6 +27,8 @@ namespace NUnit.Migrator.Helpers
         private const string RequiresSTAAttributeQualifiedName = "NUnit.Framework.RequiresSTAAttribute";
         private const string TestFixtureSetUpAttributeQualifiedName = "NUnit.Framework.TestFixtureSetUpAttribute";
         private const string TestFixtureTearDownAttributeQualifiedName = "NUnit.Framework.TestFixtureTearDownAttribute";
+        private const string TestFixtureAttributeQualifiedName = "NUnit.Framework.TestFixtureAttribute";
+        private const string IgnoreAttributeQualifiedName = "NUnit.Framework.IgnoreAttribute";
 
         internal static class Assert
         {
@@ -93,6 +95,10 @@ namespace NUnit.Migrator.Helpers
 
             public INamedTypeSymbol TestFixtureTearDown { get; private set; }
 
+            public INamedTypeSymbol TestFixture { get; private set; }
+
+            public INamedTypeSymbol Ignore { get; private set; }
+
             private bool ArePresent =>
                 ExpectedException != null
                 && TestCase != null
@@ -106,7 +112,9 @@ namespace NUnit.Migrator.Helpers
                 && RequiresMTA != null
                 && RequiresSTA != null
                 && TestFixtureSetUp != null
-                && TestFixtureTearDown != null;
+                && TestFixtureTearDown != null
+                && TestFixture != null
+                && Ignore != null;
 
             internal static bool TryGetNUnitSymbols(Compilation compilation, out Symbols nunit)
             {
@@ -125,6 +133,8 @@ namespace NUnit.Migrator.Helpers
                     RequiresSTA = compilation.GetTypeByMetadataName(RequiresSTAAttributeQualifiedName),
                     TestFixtureSetUp = compilation.GetTypeByMetadataName(TestFixtureSetUpAttributeQualifiedName),
                     TestFixtureTearDown = compilation.GetTypeByMetadataName(TestFixtureTearDownAttributeQualifiedName),
+                    TestFixture = compilation.GetTypeByMetadataName(TestFixtureAttributeQualifiedName),
+                    Ignore = compilation.GetTypeByMetadataName(IgnoreAttributeQualifiedName),
                 };
 
                 return nunit.ArePresent;

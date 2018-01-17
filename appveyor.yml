@@ -1,4 +1,4 @@
-version: 0.9.0.{build}
+version: 1.0.0-alpha{build}
 image: Visual Studio 2017
 branches:
   only:
@@ -8,15 +8,25 @@ skip_commits:
     - '**/*.txt'
     - '**/*.md'
 environment:
+  nugetOrgApiKey:
+    secure: RoB7VF83e2Nk4/rIUilssnSNHmThFSHyEFeOtFBPKhOZQYwu8XvuqXS4seBEl+yG
   sonarLogin:
     secure: us3NmhirEyZlRItv0KXrdOeGZATXPrLl2r7b0qJp77NBsmQNo2iwLFt4zzXIJGRk
 configuration: Release
 dotnet_csproj:
-  patch: true
-  file: 'nunit.migrator\*.csproj'
-  version: '{version}'
+  patch: false
 init:
-- cmd: git config --global --unset core.autocrlf
+- ps: >- 
+    git config --global --unset core.autocrlf;
+    $env:isPrerelease = $env:APPVEYOR_BUILD_VERSION.Contains('-');
+    if ($env:APPVEYOR_REPO_TAG -eq "true") {
+        $env:packageVersion = $env:APPVEYOR_REPO_TAG_NAME;
+        $env:dllVersion = $env:APPVEYOR_REPO_TAG_NAME -replace '-[A-Za-z0-9]+', ".$env:APPVEYOR_BUILD_NUMBER";
+    }
+    else {
+        $env:packageVersion = $env:APPVEYOR_BUILD_VERSION -replace '\.[0-9]+$', '';
+        $env:dllVersion = $env:APPVEYOR_BUILD_VERSION -replace '-[A-Za-z]+', '.';
+    }
 install:
 - ps: >- 
     if ($env:APPVEYOR_REPO_TAG -eq "true") { 
@@ -24,11 +34,11 @@ install:
         cinst dotcover-cli;
     }
 before_build:
-- ps: >- 
+- ps: >-
     nuget restore;
-    ./set-versions.ps1 $env:APPVEYOR_BUILD_VERSION;
+    ./set-versions.ps1 $env:packageVersion $env:dllVersion;
     if ($env:APPVEYOR_REPO_TAG -eq "true") { 
-        ./sonar.ps1 begin $env:sonarLogin $env:APPVEYOR_BUILD_VERSION 
+        ./sonar.ps1 begin $env:sonarLogin $env:APPVEYOR_REPO_TAG_NAME 
     }
 test_script:
 - ps: >-
@@ -43,11 +53,19 @@ test_script:
 artifacts:
   - path: 'nunit.migrator.vsix\**\*.vsix'
     name: vsix
+  - path: 'nunit.migrator\**\*.nupkg'
+    name: nuget
 deploy:
-  provider: GitHub
+- provider: NuGet
+  api_key: $(nugetOrgApiKey)
+  skip_symbols: true
+  artifact: nuget
+  on:
+    appveyor_repo_tag: true
+- provider: GitHub
   auth_token:
     secure: PfDIBcJmuoBtInoTSoSMOQCUtlk0+WU6wRYG9/MwWbFAEhOLJnQ1vhMu3FcOXLHt
-  artifact: vsix
-  prerelease: true
+  artifact: 'nuget, vsix'
+  prerelease: $(isPrerelease)
   on:
     appveyor_repo_tag: true

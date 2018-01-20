@@ -77,7 +77,7 @@ For vast majority of breaking changes introduced by v3 of the framework this uti
 | CurrentDirectory   | No longer set to the directory containing the test assembly. Use `TestContext.CurrentContext.TestDirectory` to locate that directory. | :soon: | :soon: |
 | NUnitLite          | NUnitLite executable tests must now reference nunit.framework in addition to NUnitLite. | :x: | :x: |
 | SetUpFixture       | Now uses `OneTimeSetUpAttribute` and `OneTimeTearDownAttribute` to designate higher-level setup and teardown methods. `SetUpAttribute` and `TearDownAttribute` are no longer allowed. | :soon: | :x: |
-| TestCaseData       | The `Throws` Named Property is no longer available. Use `Assert.Throws` or `Assert.That` in your test case. | :soon:  | :soon:  |
+| TestCaseData       | The `Throws` Named Property is no longer available. Use `Assert.Throws` or `Assert.That` in your test case. | :soon:  | :x:  |
 | TestContext        | The fields available in the `TestContext` have changed, although the same information remains available as for NUnit V2. | :soon: | :soon: |
 
 ## Contributing

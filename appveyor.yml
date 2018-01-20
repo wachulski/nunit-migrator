@@ -1,13 +1,12 @@
-version: 1.0.0-alpha{build}
+version: 1.0.0.{build}
 image: Visual Studio 2017
-branches:
-  only:
-  - master
 skip_commits:
   files:
     - '**/*.txt'
     - '**/*.md'
 environment:
+  gitHubAuthToken:
+    secure: PfDIBcJmuoBtInoTSoSMOQCUtlk0+WU6wRYG9/MwWbFAEhOLJnQ1vhMu3FcOXLHt
   nugetOrgApiKey:
     secure: RoB7VF83e2Nk4/rIUilssnSNHmThFSHyEFeOtFBPKhOZQYwu8XvuqXS4seBEl+yG
   sonarLogin:
@@ -18,31 +17,26 @@ dotnet_csproj:
 init:
 - ps: >- 
     git config --global --unset core.autocrlf;
-    $env:isPrerelease = $env:APPVEYOR_BUILD_VERSION.Contains('-');
-    if ($env:APPVEYOR_REPO_TAG -eq "true") {
-        $env:packageVersion = $env:APPVEYOR_REPO_TAG_NAME;
-        $env:dllVersion = $env:APPVEYOR_REPO_TAG_NAME -replace '-[A-Za-z0-9]+', ".$env:APPVEYOR_BUILD_NUMBER";
-    }
-    else {
-        $env:packageVersion = $env:APPVEYOR_BUILD_VERSION -replace '\.[0-9]+$', '';
-        $env:dllVersion = $env:APPVEYOR_BUILD_VERSION -replace '-[A-Za-z]+', '.';
-    }
+    $env:isVersionDueToPublish = ($env:APPVEYOR_REPO_TAG -eq "true") -and ($env:APPVEYOR_REPO_BRANCH -eq 'master');
+    $env:isPrerelease = ($env:APPVEYOR_REPO_TAG -and $env:APPVEYOR_REPO_TAG.Contains('-'));
+    $env:packageVersion = if ($env:versionDueToPublish) { $env:APPVEYOR_REPO_TAG_NAME } 
+                          else { $env:APPVEYOR_BUILD_VERSION };
 install:
 - ps: >- 
-    if ($env:APPVEYOR_REPO_TAG -eq "true") { 
+    if ($env:isVersionDueToPublish) { 
         cinst msbuild-sonarqube-runner;
         cinst dotcover-cli;
     }
 before_build:
 - ps: >-
     nuget restore;
-    ./set-versions.ps1 $env:packageVersion $env:dllVersion;
-    if ($env:APPVEYOR_REPO_TAG -eq "true") { 
+    ./set-versions.ps1 $env:packageVersion $env:APPVEYOR_BUILD_VERSION;
+    if ($env:isVersionDueToPublish) { 
         ./sonar.ps1 begin $env:sonarLogin $env:APPVEYOR_REPO_TAG_NAME 
     }
 test_script:
 - ps: >-
-    if ($env:APPVEYOR_REPO_TAG -eq "true") { 
+    if ($env:isVersionDueToPublish) { 
         dotCover analyze dotCover.xml -TargetExecutable="$($(Get-Command nunit-console).Source)";
         ./sonar.ps1 end $env:sonarLogin;
     } else {
@@ -61,11 +55,12 @@ deploy:
   skip_symbols: true
   artifact: nuget
   on:
+    branch: master
     appveyor_repo_tag: true
 - provider: GitHub
-  auth_token:
-    secure: PfDIBcJmuoBtInoTSoSMOQCUtlk0+WU6wRYG9/MwWbFAEhOLJnQ1vhMu3FcOXLHt
+  auth_token: $(gitHubAuthToken)
   artifact: 'nuget, vsix'
   prerelease: $(isPrerelease)
   on:
+    branch: master
     appveyor_repo_tag: true

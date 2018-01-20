@@ -14,10 +14,7 @@
     <PackageVersion>0.0.0</PackageVersion>
     <Title>NUnit Migrator</Title>
     <Authors>Marcin Wachulski</Authors>
-    <Description>
-      Helps transform NUnit v2 to NUnit v3. It consists of a set of Roslyn analyzers and code fixers. Add it to your
-      NUnit v2 test projects, make use of auto fixes, adjust manually when needed, bump NUnit to v3.
-    </Description>
+    <Description>Helps transform NUnit v2 to NUnit v3. It consists of a set of Roslyn analyzers and code fixers. Add it to your NUnit v2 test projects, make use of auto fixes, adjust manually when needed, bump NUnit to v3.</Description>
     <PackageTargetFallback>portable-net45+win8</PackageTargetFallback>
     <DevelopmentDependency>true</DevelopmentDependency>
     <PackageLicenseUrl>https://raw.githubusercontent.com/wachulski/nunit-migrator/master/LICENSE</PackageLicenseUrl>

@@ -98,5 +98,23 @@ namespace NUnit.Migrator
             isEnabledByDefault: true,
             description: "Ignoring particular tests or whole fixtures should have it reason explicitly stated. " +
                          DocLinkAttributesSection);
+
+        public static readonly DiagnosticDescriptor CatchAllAsError = new DiagnosticDescriptor(
+            id: "NU2M10",
+            title: "NUnit breaking change v2 -> v3.",
+            messageFormat: "{0}",
+            category: "Usage",
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true,
+            description: "This code does not work in NUnit3. Consider manual rework.");
+
+        public static readonly DiagnosticDescriptor CatchAllAsWarning = new DiagnosticDescriptor(
+            id: "NU2M11",
+            title: "NUnit breaking change v2 -> v3.",
+            messageFormat: "{0}",
+            category: "Usage",
+            defaultSeverity: DiagnosticSeverity.Warning,
+            isEnabledByDefault: true,
+            description: "This code may potentially not work in NUnit3. Consider whether manual rework is needed.");
     }
 }

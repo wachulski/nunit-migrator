@@ -29,6 +29,11 @@ namespace NUnit.Migrator.Helpers
         private const string TestFixtureTearDownAttributeQualifiedName = "NUnit.Framework.TestFixtureTearDownAttribute";
         private const string TestFixtureAttributeQualifiedName = "NUnit.Framework.TestFixtureAttribute";
         private const string IgnoreAttributeQualifiedName = "NUnit.Framework.IgnoreAttribute";
+        private const string TearDownAttributeQualifiedName = "NUnit.Framework.TearDownAttribute";
+        private const string SetUpFixtureAttributeQualifiedName = "NUnit.Framework.SetUpFixtureAttribute";
+        private const string NullOrEmptyStringConstraintQualifiedName = "NUnit.Framework.Constraints.NullOrEmptyStringConstraint";
+        private const string TestContextQualifiedName = "NUnit.Framework.TestContext";
+        private const string TestCaseDataQualifiedName = "NUnit.Framework.TestCaseData";
 
         internal static class Assert
         {
@@ -66,6 +71,7 @@ namespace NUnit.Migrator.Helpers
             public const string StartsWith = "StartsWith";
         }
 
+        // TODO: reduce duplication
         [SuppressMessage("ReSharper", "MemberHidesStaticFromOuterClass")]
         internal class Symbols
         {
@@ -99,6 +105,16 @@ namespace NUnit.Migrator.Helpers
 
             public INamedTypeSymbol Ignore { get; private set; }
 
+            public INamedTypeSymbol TearDown { get; private set; }
+
+            public INamedTypeSymbol SetUpFixture { get; private set; }
+
+            public INamedTypeSymbol NullOrEmptyStringConstraint { get; private set; }
+
+            public INamedTypeSymbol TestContext { get; private set; }
+
+            public INamedTypeSymbol TestCaseData { get; private set; }
+
             private bool ArePresent =>
                 ExpectedException != null
                 && TestCase != null
@@ -114,7 +130,12 @@ namespace NUnit.Migrator.Helpers
                 && TestFixtureSetUp != null
                 && TestFixtureTearDown != null
                 && TestFixture != null
-                && Ignore != null;
+                && Ignore != null
+                && TearDown != null
+                && SetUpFixture != null
+                && NullOrEmptyStringConstraint != null
+                && TestContext != null
+                && TestCaseData != null;
 
             internal static bool TryGetNUnitSymbols(Compilation compilation, out Symbols nunit)
             {
@@ -135,6 +156,11 @@ namespace NUnit.Migrator.Helpers
                     TestFixtureTearDown = compilation.GetTypeByMetadataName(TestFixtureTearDownAttributeQualifiedName),
                     TestFixture = compilation.GetTypeByMetadataName(TestFixtureAttributeQualifiedName),
                     Ignore = compilation.GetTypeByMetadataName(IgnoreAttributeQualifiedName),
+                    TearDown = compilation.GetTypeByMetadataName(TearDownAttributeQualifiedName),
+                    SetUpFixture = compilation.GetTypeByMetadataName(SetUpFixtureAttributeQualifiedName),
+                    NullOrEmptyStringConstraint = compilation.GetTypeByMetadataName(NullOrEmptyStringConstraintQualifiedName),
+                    TestContext = compilation.GetTypeByMetadataName(TestContextQualifiedName),
+                    TestCaseData = compilation.GetTypeByMetadataName(TestCaseDataQualifiedName),
                 };
 
                 return nunit.ArePresent;

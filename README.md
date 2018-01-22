@@ -38,7 +38,7 @@ For vast majority of breaking changes introduced by v3 of the framework this uti
 | SuiteAttribute               | No longer supported. | :white_check_mark: | :x: |
 | System.MTAThreadAttribute    | No longer treated as `RequiresMTAAttribute`             | :white_check_mark: | :x: |
 | System.STAThreadAttribute    | No longer treated as `RequiresSTAAttribute`             | :white_check_mark: | :x: |
-| TearDown and OneTimeTearDown | There is a change to the logic by which teardown methods are called. | :soon: | :x: |
+| TearDown and OneTimeTearDown | There is a change to the logic by which teardown methods are called. | :white_check_mark: | :x: |
 | TestCaseAttribute            | Named parameter `Result=` is no longer supported. Use `ExpectedResult=`. Named parameter `Ignore=` now takes a string, giving the reason for ignoring the test.| :white_check_mark:  | :white_check_mark: |
 | TestCaseSourceAttribute      | The attribute forms using a string argument to refer to the data source must now use only static fields, properties or methods. | :white_check_mark: | :x: |
 | TestFixtureAttribute         | Named parameter `Ignore=` now takes a string, giving the reason for ignoring the test. | :white_check_mark:  | :white_check_mark: |
@@ -57,8 +57,8 @@ For vast majority of breaking changes introduced by v3 of the framework this uti
 | Is.StringContaining              | Deprecated. Use `Does.Contain` | :white_check_mark:  | :white_check_mark:  |
 | Is.StringEnding                  | Deprecated. Use `Does.EndWith` | :white_check_mark:  | :white_check_mark:  |
 | Is.StringMatching                | Deprecated. Use `Does.Match` | :white_check_mark:  | :white_check_mark:  |
-| NullOrEmptyStringConstraint      | No longer supported. See `Assert.IsNullOrEmpty` above   | :soon: | :soon: |
-| SubDirectoryContainsConstraint   | No longer supported. Various alternatives are available.    | :soon: | :soon: |
+| NullOrEmptyStringConstraint      | No longer supported. See `Assert.IsNullOrEmpty` above   | :white_check_mark: | :soon: |
+| SubDirectoryContainsConstraint   | No longer supported. Various alternatives are available.    | :x: | :x: |
 | Text.All                         | No longer supported. Use `Has.All` or `Is.All` | :white_check_mark:  | :white_check_mark:  |
 | Text.Contains                    | No longer supported. Use `Does.Contain` or `Contains.Substring` | :white_check_mark:  | :white_check_mark:  |
 | Text.DoesNotContain              | No longer supported. Use `Does.Not.Contain` | :white_check_mark:  | :white_check_mark:  |
@@ -74,11 +74,11 @@ For vast majority of breaking changes introduced by v3 of the framework this uti
 |      Feature       |          Notes                                        | :mag: | :bulb: |
 |--------------------|-------------------------------------------------------|----------|------------|
 | Addins             | No longer supported. | :x: | :x: |
-| CurrentDirectory   | No longer set to the directory containing the test assembly. Use `TestContext.CurrentContext.TestDirectory` to locate that directory. | :soon: | :soon: |
+| CurrentDirectory   | No longer set to the directory containing the test assembly. Use `TestContext.CurrentContext.TestDirectory` to locate that directory. | :white_check_mark: | :soon: |
 | NUnitLite          | NUnitLite executable tests must now reference nunit.framework in addition to NUnitLite. | :x: | :x: |
-| SetUpFixture       | Now uses `OneTimeSetUpAttribute` and `OneTimeTearDownAttribute` to designate higher-level setup and teardown methods. `SetUpAttribute` and `TearDownAttribute` are no longer allowed. | :soon: | :x: |
-| TestCaseData       | The `Throws` Named Property is no longer available. Use `Assert.Throws` or `Assert.That` in your test case. | :soon:  | :x:  |
-| TestContext        | The fields available in the `TestContext` have changed, although the same information remains available as for NUnit V2. | :soon: | :soon: |
+| SetUpFixture       | Now uses `OneTimeSetUpAttribute` and `OneTimeTearDownAttribute` to designate higher-level setup and teardown methods. `SetUpAttribute` and `TearDownAttribute` are no longer allowed. | :white_check_mark: | :x: |
+| TestCaseData       | The `Throws` Named Property is no longer available. Use `Assert.Throws` or `Assert.That` in your test case. | :white_check_mark:  | :x:  |
+| TestContext        | The fields available in the `TestContext` have changed, although the same information remains available as for NUnit V2. | :white_check_mark: | :x: |
 
 ## Contributing
 

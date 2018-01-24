@@ -17,13 +17,17 @@ dotnet_csproj:
 init:
 - ps: >- 
     git config --global --unset core.autocrlf;
-    $env:isVersionDueToPublish = ($env:APPVEYOR_REPO_TAG -eq "true") -and ($env:APPVEYOR_REPO_BRANCH -eq 'master');
+    $env:isVersionDueToPublish = (($env:APPVEYOR_REPO_TAG -eq "true") -and ($env:APPVEYOR_REPO_BRANCH -eq 'master'));
     $env:isPrerelease = ($env:APPVEYOR_REPO_TAG -and $env:APPVEYOR_REPO_TAG.Contains('-'));
     $env:packageVersion = if ($env:versionDueToPublish) { $env:APPVEYOR_REPO_TAG_NAME } 
                           else { $env:APPVEYOR_BUILD_VERSION };
+    'isVersionDueToPublish=' + $env:isVersionDueToPublish;
+    'isPrerelease=' + $env:isPrerelease;
+    'packageVersion=' + $env:packageVersion;
+
 install:
 - ps: >- 
-    if ($env:isVersionDueToPublish) { 
+    if ($env:isVersionDueToPublish -eq $true) { 
         cinst msbuild-sonarqube-runner;
         cinst dotcover-cli;
     }
@@ -31,12 +35,12 @@ before_build:
 - ps: >-
     nuget restore;
     ./set-versions.ps1 $env:packageVersion $env:APPVEYOR_BUILD_VERSION;
-    if ($env:isVersionDueToPublish) { 
+    if ($env:isVersionDueToPublish -eq $true) { 
         ./sonar.ps1 begin $env:sonarLogin $env:APPVEYOR_REPO_TAG_NAME 
     }
 test_script:
 - ps: >-
-    if ($env:isVersionDueToPublish) { 
+    if ($env:isVersionDueToPublish -eq $true) { 
         dotCover analyze dotCover.xml -TargetExecutable="$($(Get-Command nunit-console).Source)";
         ./sonar.ps1 end $env:sonarLogin;
     } else {

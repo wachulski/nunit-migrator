@@ -19,7 +19,7 @@ init:
     git config --global --unset core.autocrlf;
     $env:isVersionDueToPublish = (($env:APPVEYOR_REPO_TAG -eq "true") -and ($env:APPVEYOR_REPO_BRANCH -eq 'master'));
     $env:isPrerelease = (($env:APPVEYOR_REPO_TAG -eq "true") -and ($env:APPVEYOR_REPO_TAG_NAME.Contains('-')));
-    $env:packageVersion = if ($env:versionDueToPublish) { $env:APPVEYOR_REPO_TAG_NAME } 
+    $env:packageVersion = if ($env:isVersionDueToPublish -eq "true") { $env:APPVEYOR_REPO_TAG_NAME } 
                           else { $env:APPVEYOR_BUILD_VERSION };
     'isVersionDueToPublish=' + $env:isVersionDueToPublish;
     'isPrerelease=' + $env:isPrerelease;

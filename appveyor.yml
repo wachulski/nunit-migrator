@@ -1,9 +1,5 @@
 version: 1.0.0.{build}
 image: Visual Studio 2017
-skip_commits:
-  files:
-    - '**/*.txt'
-    - '**/*.md'
 environment:
   gitHubAuthToken:
     secure: PfDIBcJmuoBtInoTSoSMOQCUtlk0+WU6wRYG9/MwWbFAEhOLJnQ1vhMu3FcOXLHt

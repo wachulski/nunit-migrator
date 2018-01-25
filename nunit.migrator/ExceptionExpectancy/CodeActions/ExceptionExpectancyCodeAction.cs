@@ -39,7 +39,8 @@ namespace NUnit.Migrator.ExceptionExpectancy.CodeActions
 
         public override string EquivalenceKey => "ExceptionExpectancyCodeActionKey";
 
-        public override string Title => "Replace body with 'Assert.Throws<T>' and remove exception related attribute(s)";
+        public override string Title => 
+            Texts.CodeActionTitle("Replace body with 'Assert.Throws<T>' and remove exception related attribute(s)");
 
         protected override async Task<Document> GetChangedDocumentAsync(CancellationToken cancellationToken)
         {

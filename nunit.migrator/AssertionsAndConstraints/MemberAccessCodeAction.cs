@@ -18,7 +18,7 @@ namespace NUnit.Migrator.AssertionsAndConstraints
         public sealed override string EquivalenceKey => $"{_migration.DiagnosticDescriptor.Id}FixKey";
 
         public sealed override string Title => 
-            $"Replace with {_migration.CreateReplaceWithTargetString(_fixedContainer.Value)}";
+            Texts.CodeActionTitle($"Replace with {_migration.CreateReplaceWithTargetString(_fixedContainer.Value)}");
 
         internal MemberAccessCodeAction(Document document, TMemberAccessContainerNode container, 
             MemberAccessBasedMigration<TMemberAccessContainerNode> migration)

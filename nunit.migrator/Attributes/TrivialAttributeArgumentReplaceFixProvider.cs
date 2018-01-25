@@ -39,7 +39,7 @@ namespace NUnit.Migrator.Attributes
             public sealed override string EquivalenceKey => 
                 $"DeprecatedAttributeArgumentReplaceableWith{_targetString}FixKey";
 
-            public sealed override string Title => $"Replace with {_targetString}";
+            public sealed override string Title => Texts.CodeActionTitle($"Replace with {_targetString}");
 
             public ReplaceDeprecatedAttributeArgument(Document document, SyntaxNode root, 
                 AttributeArgumentSyntax argumentSyntax)

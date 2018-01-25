@@ -43,7 +43,7 @@ namespace NUnit.Migrator.Attributes
                 _model = model;
             }
 
-            public override string Title { get; } = "Fix ignore reason";
+            public override string Title { get; } = Texts.CodeActionTitle("Fix ignore reason");
 
             public override string EquivalenceKey { get; } = "IgnoreReasonFixer";
 

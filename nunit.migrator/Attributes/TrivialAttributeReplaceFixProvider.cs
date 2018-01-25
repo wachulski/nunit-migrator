@@ -41,7 +41,7 @@ namespace NUnit.Migrator.Attributes
             public sealed override string EquivalenceKey => 
                 $"DeprecatedAttributeReplaceableWith{_targetFamily}FamilyFixKey";
 
-            public sealed override string Title => $"Replace with {_targetString}";
+            public sealed override string Title => Texts.CodeActionTitle($"Replace with {_targetString}");
 
             public ReplaceDeprecatedAttribute(Document document, SyntaxNode root, AttributeSyntax attributeSyntax)
             {

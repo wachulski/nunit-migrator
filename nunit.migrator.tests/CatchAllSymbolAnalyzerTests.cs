@@ -26,7 +26,8 @@ public class TestClass
             {
                 Id = "NU2M11",
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 7, 6) },
-                Message = "There is a change to the logic by which teardown methods are called.",
+                Message = "There is a change to the logic by which teardown methods are called. " +
+                          "See more: https://github.com/nunit/docs/wiki/TearDown-Attribute",
                 Severity = DiagnosticSeverity.Warning
             });
         }
@@ -75,7 +76,7 @@ public class TestClass
                 Id = "NU2M11",
                 Locations = new[] { new DiagnosticResultLocation("Test0.cs", 10, 23) },
                 Message = "The fields available in the TestContext have changed, although the same information " +
-                          "remains available as for NUnit V2.",
+                          "remains available as for NUnit V2. See more: https://github.com/nunit/docs/wiki/TestContext",
                 Severity = DiagnosticSeverity.Warning
             });
         }

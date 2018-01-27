@@ -13,7 +13,14 @@ So you have your unit tests project founded on NUnit v2 realm. And you are consi
 
 ## Helping you with breaking changes
 
-For vast majority of breaking changes introduced by v3 of the framework this utility reports warnings or errors, for some - equips you with code fixes. See the following tables to see what is currently supported (based on https://github.com/nunit/docs/wiki/Breaking-Changes material).
+For vast majority of breaking changes introduced by v3 of the framework this utility reports warnings or errors, for some - equips you with code fixes. Here goes the example:
+
+![Migrating exceptions](img/howto_anim_exceptions.gif)
+
+More on how to perform migration with the help of this utility can be found on [wiki](https://github.com/wachulski/nunit-migrator/wiki).
+
+## Reference
+See the following tables to see what is currently supported (based on https://github.com/nunit/docs/wiki/Breaking-Changes material).
 
 ##### Aid
 

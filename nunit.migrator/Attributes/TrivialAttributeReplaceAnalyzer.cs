@@ -46,6 +46,8 @@ namespace NUnit.Migrator.Attributes
 
         private static readonly IReadOnlyDictionary<string, string> ReplacementTable = new Dictionary<string, string>
         {
+            ["MTAThread"] = "Apartment(System.Threading.ApartmentState.MTA)",
+            ["STAThread"] = "Apartment(System.Threading.ApartmentState.STA)",
             ["RequiresMTA"] = "Apartment(System.Threading.ApartmentState.MTA)",
             ["RequiresSTA"] = "Apartment(System.Threading.ApartmentState.STA)",
             ["TestFixtureSetUp"] = "OneTimeSetUp",

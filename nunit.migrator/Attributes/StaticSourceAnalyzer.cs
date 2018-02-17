@@ -15,18 +15,21 @@ namespace NUnit.Migrator.Attributes
 
         protected override void Analyze(SyntaxNodeAnalysisContext context, AttributeSyntax attributeSyntax)
         {
-            var model = new StaticSourceAttribute(attributeSyntax);
-
-            var containerTypeSymbol = model.GetContainerTypeSymbol(context.SemanticModel);
-            if (containerTypeSymbol == null)
+            var attribute = new StaticSourceAttribute(attributeSyntax, context.SemanticModel);
+            if (string.IsNullOrEmpty(attribute.MemberName))
                 return;
-
             var attributeLocation = attributeSyntax.GetLocation();
 
-            if (!IsMemberStatic(containerTypeSymbol, model.SourceName, attributeLocation, context.SemanticModel))
+            if (!IsMemberStatic(attribute.ContainingSymbol, attribute.MemberName, attributeLocation, 
+                context.SemanticModel))
             {
-                context.ReportDiagnostic(Diagnostic.Create(
-                    Descriptors.StaticSource, attributeLocation, model.AttributeName, model.MemberFullPath));
+                context.ReportDiagnostic(
+                    Diagnostic.Create(
+                        Descriptors.StaticSource, 
+                        attributeLocation,
+                        attribute.GetFixerParams(),
+                        attribute.AttributeName, 
+                        attribute.MemberFullPath));
             }
         }
 
@@ -39,11 +42,15 @@ namespace NUnit.Migrator.Attributes
             };
         }
 
-        private static bool IsMemberStatic(INamespaceOrTypeSymbol containerTypeSymbol, string memberName, 
+        private static bool IsMemberStatic(INamespaceOrTypeSymbol containingTypeSymbol, string memberName, 
             Location scope, SemanticModel semanticModel)
         {
+            // for safety, code might not compile as the author is being typing, the analyzer shouldn't throw then
+            if (containingTypeSymbol == null || string.IsNullOrWhiteSpace(memberName))
+                return false;
+
             return semanticModel
-                .LookupStaticMembers(scope.SourceSpan.Start, containerTypeSymbol, memberName)
+                .LookupStaticMembers(scope.SourceSpan.Start, containingTypeSymbol, memberName)
                 .Any();
         }
     }

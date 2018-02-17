@@ -43,15 +43,15 @@ See the following tables to see what is currently supported (based on https://gi
 | RequiresMTAAttribute         | Deprecated. Use `ApartmentAttribute`                    | :white_check_mark: | :white_check_mark: |
 | RequiresSTAAttribute         | Deprecated. Use `ApartmentAttribute`                    | :white_check_mark: | :white_check_mark: |
 | SuiteAttribute               | No longer supported. | :white_check_mark: | :x: |
-| System.MTAThreadAttribute    | No longer treated as `RequiresMTAAttribute`             | :white_check_mark: | :x: |
-| System.STAThreadAttribute    | No longer treated as `RequiresSTAAttribute`             | :white_check_mark: | :x: |
+| System.MTAThreadAttribute    | No longer treated as `RequiresMTAAttribute`             | :white_check_mark: | :white_check_mark: |
+| System.STAThreadAttribute    | No longer treated as `RequiresSTAAttribute`             | :white_check_mark: | :white_check_mark: |
 | TearDown and OneTimeTearDown | There is a change to the logic by which teardown methods are called. | :white_check_mark: | :x: |
 | TestCaseAttribute            | Named parameter `Result=` is no longer supported. Use `ExpectedResult=`. Named parameter `Ignore=` now takes a string, giving the reason for ignoring the test.| :white_check_mark:  | :white_check_mark: |
-| TestCaseSourceAttribute      | The attribute forms using a string argument to refer to the data source must now use only static fields, properties or methods. | :white_check_mark: | :x: |
+| TestCaseSourceAttribute      | The attribute forms using a string argument to refer to the data source must now use only static fields, properties or methods. | :white_check_mark: | :white_check_mark: |
 | TestFixtureAttribute         | Named parameter `Ignore=` now takes a string, giving the reason for ignoring the test. | :white_check_mark:  | :white_check_mark: |
 | TestFixtureSetUpAttribute    | Deprecated. Use `OneTimeSetUpAttribute`.  | :white_check_mark: | :white_check_mark: |
 | TestFixtureTearDownAttribute | Deprecated. Use `OneTimeTearDownAttribute`.  | :white_check_mark: | :white_check_mark: |
-| ValueSourceAttribute         | The source name of the data source must now use only static fields, properties or  methods. | :white_check_mark: | :x: |
+| ValueSourceAttribute         | The source name of the data source must now use only static fields, properties or  methods. | :white_check_mark: | :white_check_mark: |
 
 ###### Assertions and Constraints
 

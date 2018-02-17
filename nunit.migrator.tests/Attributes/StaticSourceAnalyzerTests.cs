@@ -19,7 +19,7 @@ namespace NUnit.Migrator.Tests.Attributes
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer() => new StaticSourceAnalyzer();
 
         [Test]
-        public void ForTypeReferenced_DoesNotReport([ValueSource(nameof(SourceKinds))] SourceKind sourceKind)
+        public void ForTypeReferenced_DoesNotReport()
         {
             string source = @"
 using NUnit.Framework;
@@ -36,7 +36,7 @@ class TcSource : IEnumerable
 [TestFixture]
 public class TestClass
 {
-    " + CreateTestMethodString(sourceKind, "typeof(TcSource)") + @"
+    " + CreateTestMethodString(SourceKind.TestCaseSource, "typeof(TcSource)") + @"
 }
 ";
             VerifyNoDiagnosticReported(source);
@@ -145,7 +145,7 @@ public class TestClass
                 Id = "NU2M04",
                 Locations = new[] { GetExpectedDiagnosticLocation(sourceKind) },
                 Message = GetExpectedAttributeName(sourceKind) + 
-                          " attribute refers to 'Cases' which is not static.",
+                          " attribute refers to 'TestClass.Cases' which is not static.",
                 Severity = DiagnosticSeverity.Error
             });
         }
@@ -170,7 +170,7 @@ public class TestClass
                 Id = "NU2M04",
                 Locations = new[] { GetExpectedDiagnosticLocation(sourceKind) },
                 Message = GetExpectedAttributeName(sourceKind) +
-                          " attribute refers to 'Cases' which is not static.",
+                          " attribute refers to 'TestClass.Cases' which is not static.",
                 Severity = DiagnosticSeverity.Error
             });
         }

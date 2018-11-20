@@ -44,7 +44,7 @@ namespace NUnit.Migrator.ExceptionExpectancy.CodeActions
                             SyntaxFactory.SingletonSeparatedList(
                                 SyntaxFactory.Argument(
                                     SyntaxFactory.LiteralExpression(SyntaxKind.StringLiteralExpression,
-                                        SyntaxFactory.ParseToken($"\"{_attribute.ExpectedMessage}\""
+                                        SyntaxFactory.Literal(_attribute.ExpectedMessage
                                         )))))))
             };
         }

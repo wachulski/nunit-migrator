@@ -28,7 +28,7 @@ namespace NUnit.Migrator.ExceptionExpectancy.CodeActions
 
             var userMessageArgument = SyntaxFactory.Argument(
                 SyntaxFactory.LiteralExpression(SyntaxKind.StringLiteralExpression,
-                    SyntaxFactory.ParseToken($"\"{_userMessage}\"")));
+                    SyntaxFactory.Literal(_userMessage)));
 
             var decoratedInvocationArgumentList = invocation.ArgumentList.AddArguments(userMessageArgument);
 

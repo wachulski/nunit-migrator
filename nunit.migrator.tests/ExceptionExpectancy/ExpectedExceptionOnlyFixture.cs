@@ -322,9 +322,9 @@ public class TestClass
         }
 
         [TestCase("Simple Test With No Escaped Characters")]
-        [TestCase("A Test with \"Double\" quotes escaped")]
-        [TestCase("A Test with \'Single\' Quotes Escaped")]
-        [TestCase("A Test with \\Slashes\\ Escaped")]
+        [TestCase("A Test with \\\"Double\\\" quotes escaped")] // A Test with \"Double\" quotes escaped
+        [TestCase("A Test with \\'Single\\' Quotes Escaped")] // A Test with \'Single\' Quotes Escaped
+        [TestCase("A Test with \\\\Slashes\\\\ Escaped")] // A Test with \\Slashes\\ Escaped
         public void WhenExceptionMessageSpecified_ContainsEscapedCharacters_FixesToAssertThrowsWithVariableAssignmentAndMessageExactCheck(string exceptionMessage)
         {
             var source = @"
@@ -400,9 +400,9 @@ public class TestClass
         }
 
         [TestCase("Simple Test With No Escaped Characters")]
-        [TestCase("A Test with \"Double\" quotes escaped")]
-        [TestCase("A Test with \'Single\' Quotes Escaped")]
-        [TestCase("A Test with \\Slashes\\ Escaped")]
+        [TestCase("A Test with \\\"Double\\\" quotes escaped")] // A Test with \"Double\" quotes escaped
+        [TestCase("A Test with \\'Single\\' Quotes Escaped")] // A Test with \'Single\' Quotes Escaped
+        [TestCase("A Test with \\\\Slashes\\\\ Escaped")] // A Test with \\Slashes\\ Escaped
         public void WhenUserMessageSpecified_ContainsEscapedCharacters_FixesToAssertThrowsWithVariableAssignmentAndMessageExactCheck(string userMessage)
         {
             var source = @"

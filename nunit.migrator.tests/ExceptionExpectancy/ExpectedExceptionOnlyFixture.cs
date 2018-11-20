@@ -185,8 +185,7 @@ public class TestClass
 
         [TestCase("ExpectedException = typeof(FirstEx), ExpectedExceptionName = \"LastEx\"")]
         [TestCase("ExpectedExceptionName = \"FirstEx\", ExpectedException = typeof(LastEx)")]
-        public void 
-            WhenExceptionTypeNamesDefinedMultipleTimesWithNameEqualsSyntaxOnly_FixesToAssertThrowsOfLastDefinedType(
+        public void WhenExceptionTypeNamesDefinedMultipleTimesWithNameEqualsSyntaxOnly_FixesToAssertThrowsOfLastDefinedType(
             string attrArguments)
         {
             var source = @"
@@ -322,6 +321,50 @@ public class TestClass
             VerifyCSharpFix(source, expected, allowNewCompilerDiagnostics: true);
         }
 
+        [TestCase("Simple Test With No Escaped Characters")]
+        [TestCase("A Test with \"Double\" quotes escaped")]
+        [TestCase("A Test with \'Single\' Quotes Escaped")]
+        [TestCase("A Test with \\Slashes\\ Escaped")]
+        public void WhenExceptionMessageSpecified_ContainsEscapedCharacters_FixesToAssertThrowsWithVariableAssignmentAndMessageExactCheck(string exceptionMessage)
+        {
+            var source = @"
+using NUnit.Framework;
+using System;
+
+[TestFixture]
+public class TestClass
+{
+    [Test]
+    [ExpectedException(typeof(Exception), ExpectedMessage = " + $"\"{exceptionMessage}\"" + @")]
+    public void TestMethod()
+        {
+            throw new Exception(" + $"\"{exceptionMessage}\"" + @");
+        }
+    }
+";
+
+            var expected = @"
+using NUnit.Framework;
+using System;
+
+[TestFixture]
+public class TestClass
+{
+    [Test]
+    public void TestMethod()
+    {
+        var ex = Assert.Throws<Exception>(() =>
+        {
+            throw new Exception(" + $"\"{exceptionMessage}\"" + @");
+        });
+        Assert.That(ex.Message, Is.EqualTo(" + $"\"{exceptionMessage}\"" + @"));
+    }
+}
+";
+
+            VerifyCSharpFix(source, expected);
+        }
+
         [Test]
         public void WhenExceptionMessageSpecified_FixesToAssertThrowsWithVariableAssignmentAndMessageExactCheck()
         {
@@ -354,6 +397,49 @@ public class TestClass
     }
 }";
             VerifyCSharpFix(source, expected, allowNewCompilerDiagnostics: true);
+        }
+
+        [TestCase("Simple Test With No Escaped Characters")]
+        [TestCase("A Test with \"Double\" quotes escaped")]
+        [TestCase("A Test with \'Single\' Quotes Escaped")]
+        [TestCase("A Test with \\Slashes\\ Escaped")]
+        public void WhenUserMessageSpecified_ContainsEscapedCharacters_FixesToAssertThrowsWithVariableAssignmentAndMessageExactCheck(string userMessage)
+        {
+            var source = @"
+using NUnit.Framework;
+using System;
+
+[TestFixture]
+public class TestClass
+{
+    [Test]
+    [ExpectedException(typeof(Exception), UserMessage = " + $"\"{userMessage}\"" + @")]
+    public void TestMethod()
+        {
+            throw new Exception();
+        }
+    }
+";
+
+            var expected = @"
+using NUnit.Framework;
+using System;
+
+[TestFixture]
+public class TestClass
+{
+    [Test]
+    public void TestMethod()
+    {
+        Assert.Throws<Exception>(() =>
+        {
+            throw new Exception();
+        }, " + $"\"{userMessage}\"" + @");
+    }
+}
+";
+
+            VerifyCSharpFix(source, expected);
         }
 
         [Test]

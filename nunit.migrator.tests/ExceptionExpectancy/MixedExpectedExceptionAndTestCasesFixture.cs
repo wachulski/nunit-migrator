@@ -193,8 +193,10 @@ public class TestClass
             VerifyCSharpFix(source, expected, allowNewCompilerDiagnostics: true);
         }
 
-        [Test]
-        public void For1TCAndExpectedException_GivenUserMessage_AddsUserMessageAssertToFixedTestMethod()
+        [TestCase("User msg")]
+        [TestCase("An \\\"Escaped Double Quote\\\" User Message")] // An \"Escaped Double Quote\" User Message
+        [TestCase("An \\'Escaped Single Quote\\' User Message")] // An \'Escaped Single Quote\' User Message
+        public void For1TCAndExpectedException_GivenUserMessage_AddsUserMessageAssertToFixedTestMethod(string userMessage)
         {
             var source = @"
 using System;
@@ -203,7 +205,7 @@ using NUnit.Framework;
 [TestFixture]
 public class TestClass
 {
-    [ExpectedException(UserMessage = ""User msg"")]
+    [ExpectedException(UserMessage = " + $"\"{userMessage}\"" + @")]
     [TestCase(1)]
     public void TestMethod(int x)
     {
@@ -223,7 +225,7 @@ public class TestClass
         Assert.Throws<System.Exception>(() =>
         {
             throw new Exception();
-        }, ""User msg"");
+        }, " + $"\"{userMessage}\"" + @");
     }
 }";
             VerifyCSharpFix(source, expected, allowNewCompilerDiagnostics: true);

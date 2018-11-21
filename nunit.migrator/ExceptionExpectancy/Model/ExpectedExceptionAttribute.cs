@@ -32,7 +32,7 @@ namespace NUnit.Migrator.ExceptionExpectancy.Model
                     break;
                 case LiteralExpressionSyntax literal when nameEquals ==
                                                           NUnitFramework.ExpectedExceptionArgument.UserMessage:
-                    UserMessage = literal.Token.ValueText;
+                    UserMessage = literal.Token.Text;
                     break;
                 case LiteralExpressionSyntax literal when nameEquals ==
                                                           NUnitFramework.ExpectedExceptionArgument.Handler:

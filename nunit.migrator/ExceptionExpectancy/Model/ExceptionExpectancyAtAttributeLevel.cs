@@ -90,7 +90,7 @@ namespace NUnit.Migrator.ExceptionExpectancy.Model
                     break;
                 case LiteralExpressionSyntax literal when nameEquals ==
                                                           NUnitFramework.ExpectedExceptionArgument.ExpectedMessage:
-                    ExpectedMessage = literal.Token.ValueText;
+                    ExpectedMessage = literal.Token.Text;
                     break;
                 case MemberAccessExpressionSyntax memberAccess when nameEquals ==
                                                                     NUnitFramework.ExpectedExceptionArgument.MatchType:

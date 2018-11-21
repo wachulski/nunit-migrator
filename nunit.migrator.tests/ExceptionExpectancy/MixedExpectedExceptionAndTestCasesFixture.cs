@@ -196,6 +196,7 @@ public class TestClass
         [TestCase("User msg")]
         [TestCase("An \\\"Escaped Double Quote\\\" User Message")] // An \"Escaped Double Quote\" User Message
         [TestCase("An \\'Escaped Single Quote\\' User Message")] // An \'Escaped Single Quote\' User Message
+        [TestCase("A Test with\\r\\nCarriage Return and Line Feeds In It")] // A Test with \r\nCarriage Return and Line Feeds In It
         public void For1TCAndExpectedException_GivenUserMessage_AddsUserMessageAssertToFixedTestMethod(string userMessage)
         {
             var source = @"

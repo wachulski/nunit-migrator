@@ -78,7 +78,8 @@ namespace NUnit.Migrator.ExceptionExpectancy.CodeActions
 
             var clusterMethod = _method.WithoutExceptionExpectancyInAttributes(testCasesToRemain)
                 .WithBody(CreateAssertedBlock(exceptionExpectancy)).WithTrailingTrivia(CreateClusterMethodTrailingTrivia(cluster))
-                .WithIdentifier(testMethodNamer.CreateName(exceptionExpectancy, clustersCount));
+                .WithIdentifier(testMethodNamer.CreateName(exceptionExpectancy, clustersCount))
+                .WithTriviaFrom(_method);
 
             return clusterMethod;
         }

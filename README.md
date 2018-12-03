@@ -64,7 +64,7 @@ See the following tables to see what is currently supported (based on https://gi
 | Is.StringContaining              | Deprecated. Use `Does.Contain` | :white_check_mark:  | :white_check_mark:  |
 | Is.StringEnding                  | Deprecated. Use `Does.EndWith` | :white_check_mark:  | :white_check_mark:  |
 | Is.StringMatching                | Deprecated. Use `Does.Match` | :white_check_mark:  | :white_check_mark:  |
-| NullOrEmptyStringConstraint      | No longer supported. See `Assert.IsNullOrEmpty` above   | :white_check_mark: | :soon: |
+| NullOrEmptyStringConstraint      | No longer supported. See `Assert.IsNullOrEmpty` above   | :white_check_mark: | :x: |
 | SubDirectoryContainsConstraint   | No longer supported. Various alternatives are available.    | :x: | :x: |
 | Text.All                         | No longer supported. Use `Has.All` or `Is.All` | :white_check_mark:  | :white_check_mark:  |
 | Text.Contains                    | No longer supported. Use `Does.Contain` or `Contains.Substring` | :white_check_mark:  | :white_check_mark:  |
@@ -81,7 +81,7 @@ See the following tables to see what is currently supported (based on https://gi
 |      Feature       |          Notes                                        | :mag: | :bulb: |
 |--------------------|-------------------------------------------------------|----------|------------|
 | Addins             | No longer supported. | :x: | :x: |
-| CurrentDirectory   | No longer set to the directory containing the test assembly. Use `TestContext.CurrentContext.TestDirectory` to locate that directory. | :white_check_mark: | :soon: |
+| CurrentDirectory   | No longer set to the directory containing the test assembly. Use `TestContext.CurrentContext.TestDirectory` to locate that directory. | :white_check_mark: | :x: |
 | NUnitLite          | NUnitLite executable tests must now reference nunit.framework in addition to NUnitLite. | :x: | :x: |
 | SetUpFixture       | Now uses `OneTimeSetUpAttribute` and `OneTimeTearDownAttribute` to designate higher-level setup and teardown methods. `SetUpAttribute` and `TearDownAttribute` are no longer allowed. | :white_check_mark: | :x: |
 | TestCaseData       | The `Throws` Named Property is no longer available. Use `Assert.Throws` or `Assert.That` in your test case. | :white_check_mark:  | :x:  |
@@ -93,7 +93,7 @@ This is an early stage of project development, but it is open for contributions.
 
 ## Copyright
 
-Copyright © 2017 Marcin Wachulski
+Copyright © 2017-2018 Marcin Wachulski
 
 ## License
 

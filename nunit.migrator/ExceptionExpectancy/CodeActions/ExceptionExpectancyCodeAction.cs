@@ -77,10 +77,19 @@ namespace NUnit.Migrator.ExceptionExpectancy.CodeActions
             var exceptionExpectancy = cluster.EquivalentItems.First();
 
             var clusterMethod = _method.WithoutExceptionExpectancyInAttributes(testCasesToRemain)
-                .WithBody(CreateAssertedBlock(exceptionExpectancy)).WithTrailingTrivia(CreateClusterMethodTrailingTrivia(cluster))
-                .WithIdentifier(testMethodNamer.CreateName(exceptionExpectancy, clustersCount));
+                .WithBody(CreateAssertedBlock(exceptionExpectancy))
+                .WithIdentifier(testMethodNamer.CreateName(exceptionExpectancy, clustersCount))
+                .WithLeadingTrivia(CreateClusterMethodLeadingTrivia(cluster))
+                .WithTrailingTrivia(CreateClusterMethodTrailingTrivia(cluster));
 
             return clusterMethod;
+        }
+
+        private SyntaxTriviaList CreateClusterMethodLeadingTrivia(TestCaseExceptionEquivalenceCluster cluster)
+        {
+            return cluster == _clusters.First()
+                ? _method.GetLeadingTrivia()
+                : SyntaxTriviaList.Empty;
         }
 
         private SyntaxTriviaList CreateClusterMethodTrailingTrivia(TestCaseExceptionEquivalenceCluster cluster)

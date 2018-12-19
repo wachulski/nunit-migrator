@@ -13,7 +13,4 @@
   <ItemGroup>
     <ProjectReference Include="..\nunit.migrator\nunit.migrator.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
 </Project>

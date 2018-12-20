@@ -273,5 +273,137 @@ public class TestClass
 
             VerifyCSharpFix(source, expected);
         }
+
+        [Test]
+        public void WhenExpectedExceptionAttributeIsBelowMultipleTests_CommentsArePreserved()
+        {
+            var source = @"
+using NUnit.Framework;
+using System;
+
+[TestFixture]
+public class TestClass
+{
+    /// <summary>
+    /// There was another comment here
+    /// </summary>
+    [Test]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void TestMethod2()
+    {
+        throw new InvalidOperationException();
+    }
+
+    /// <summary>
+    /// There was a comment here
+    /// </summary>
+    [Test]
+    [ExpectedException(typeof(Exception))]
+    public void TestMethod()
+    {
+        throw new Exception();
+    }
+}";
+
+            var expected = @"
+using NUnit.Framework;
+using System;
+
+[TestFixture]
+public class TestClass
+{
+    /// <summary>
+    /// There was another comment here
+    /// </summary>
+    [Test]
+    public void TestMethod2()
+    {
+        Assert.Throws<InvalidOperationException>(() =>
+        {
+            throw new InvalidOperationException();
+        });
+    }
+
+    /// <summary>
+    /// There was a comment here
+    /// </summary>
+    [Test]
+    public void TestMethod()
+    {
+        Assert.Throws<Exception>(() =>
+        {
+            throw new Exception();
+        });
+    }
+}";
+
+            VerifyCSharpFix(source, expected);
+        }
+
+        [Test]
+        public void WhenExpectedExceptionAttributeIsAboveMultipleTests_CommentsArePreserved()
+        {
+            var source = @"
+using NUnit.Framework;
+using System;
+
+[TestFixture]
+public class TestClass
+{
+    /// <summary>
+    /// There was another comment here
+    /// </summary>
+    [ExpectedException(typeof(InvalidOperationException))]
+    [Test]
+    public void TestMethod2()
+    {
+        throw new InvalidOperationException();
+    }
+
+    /// <summary>
+    /// There was a comment here
+    /// </summary>
+    [ExpectedException(typeof(Exception))]
+    [Test]
+    public void TestMethod()
+    {
+        throw new Exception();
+    }
+}";
+
+            var expected = @"
+using NUnit.Framework;
+using System;
+
+[TestFixture]
+public class TestClass
+{
+    /// <summary>
+    /// There was another comment here
+    /// </summary>
+    [Test]
+    public void TestMethod2()
+    {
+        Assert.Throws<InvalidOperationException>(() =>
+        {
+            throw new InvalidOperationException();
+        });
+    }
+
+    /// <summary>
+    /// There was a comment here
+    /// </summary>
+    [Test]
+    public void TestMethod()
+    {
+        Assert.Throws<Exception>(() =>
+        {
+            throw new Exception();
+        });
+    }
+}";
+
+            VerifyCSharpFix(source, expected);
+        }
     }
 }

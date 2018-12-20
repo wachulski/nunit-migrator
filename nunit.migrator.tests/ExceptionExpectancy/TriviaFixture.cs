@@ -275,7 +275,7 @@ public class TestClass
         }
 
         [Test]
-        public void WhenExpectedExceptionAttributeIsBelowMultipleTests_CommentsArePreserved()
+        public void ForMultipleTests_WhenExpectedExceptionAttributeIsBelowTest_CommentsAndWhitespaceArePreserved()
         {
             var source = @"
 using NUnit.Framework;
@@ -341,7 +341,7 @@ public class TestClass
         }
 
         [Test]
-        public void WhenExpectedExceptionAttributeIsAboveMultipleTests_CommentsArePreserved()
+        public void ForMultipleTests_WhenExpectedExceptionAttributeIsAboveTest_CommentsAndWhitespaceArePreserved()
         {
             var source = @"
 using NUnit.Framework;
@@ -401,6 +401,172 @@ public class TestClass
             throw new Exception();
         });
     }
+}";
+
+            VerifyCSharpFix(source, expected);
+        }
+
+        [Test]
+        public void For2TCs_WhenExpectedExceptionIsFirstTestCase_CommentsArePreserved()
+        {
+            var source = @"
+using NUnit.Framework;
+using System;
+
+[TestFixture]
+public class TestClass
+{
+    /// <summary>
+    /// There was a comment here
+    /// </summary>
+    /// <param name=""input"">Comment for input</param>
+    /// <remarks>This was a remark</remarks>
+    [TestCase(1, ExpectedException = typeof(Exception))]
+    [TestCase(2)]
+    public void TestMethod( int input )
+    {
+        throw new Exception();
+    }
+}";
+
+            var expected = @"
+using NUnit.Framework;
+using System;
+
+[TestFixture]
+public class TestClass
+{
+    /// <summary>
+    /// There was a comment here
+    /// </summary>
+    /// <param name=""input"">Comment for input</param>
+    /// <remarks>This was a remark</remarks>
+    [TestCase(1)]
+    public void TestMethod( int input )
+    {
+        Assert.Throws<Exception>(() =>
+        {
+            throw new Exception();
+        });
+    }
+
+    /// <summary>
+    /// There was a comment here
+    /// </summary>
+    /// <param name=""input"">Comment for input</param>
+    /// <remarks>This was a remark</remarks>
+    [TestCase(2)]
+    public void TestMethod( int input )
+    {
+        throw new Exception();
+    }
+}";
+
+            VerifyCSharpFix(source, expected);
+        }
+
+        [Test]
+        public void For2TCs_WhenExpectedExceptionIsSecondTestCase_CommentsArePreserved()
+        {
+            var source = @"
+using NUnit.Framework;
+using System;
+
+[TestFixture]
+public class TestClass
+{
+    /// <summary>
+    /// There was a comment here
+    /// </summary>
+    /// <param name=""input"">Comment for input</param>
+    /// <remarks>This was a remark</remarks>
+    [TestCase(1)]
+    [TestCase(2, ExpectedException = typeof(Exception))]
+    public void TestMethod( int input )
+    {
+        throw new Exception();
+    }
+}";
+
+            var expected = @"
+using NUnit.Framework;
+using System;
+
+[TestFixture]
+public class TestClass
+{
+    /// <summary>
+    /// There was a comment here
+    /// </summary>
+    /// <param name=""input"">Comment for input</param>
+    /// <remarks>This was a remark</remarks>
+    [TestCase(1)]
+    public void TestMethod( int input )
+    {
+        throw new Exception();
+    }
+
+    /// <summary>
+    /// There was a comment here
+    /// </summary>
+    /// <param name=""input"">Comment for input</param>
+    /// <remarks>This was a remark</remarks>
+    [TestCase(2)]
+    public void TestMethod( int input )
+    {
+        Assert.Throws<Exception>(() =>
+        {
+            throw new Exception();
+        });
+    }
+}";
+
+            VerifyCSharpFix(source, expected);
+        }
+
+        [Test]
+        public void For2TCs_WhenExpectedException_RegionsArePreserved()
+        {
+            var source = @"
+using NUnit.Framework;
+using System;
+
+[TestFixture]
+public class TestClass
+{
+    #region TestRegion
+    [TestCase(1)]
+    [TestCase(2, ExpectedException = typeof(Exception))]
+    public void TestMethod(int input)
+    {
+        throw new Exception();
+    }
+    #endregion
+}";
+
+            var expected = @"
+using NUnit.Framework;
+using System;
+
+[TestFixture]
+public class TestClass
+{
+    #region TestRegion
+    [TestCase(1)]
+    public void TestMethod(int input)
+    {
+        throw new Exception();
+    }
+
+    [TestCase(2)]
+    public void TestMethod(int input)
+    {
+        Assert.Throws<Exception>(() =>
+        {
+            throw new Exception();
+        });
+    }
+    #endregion
 }";
 
             VerifyCSharpFix(source, expected);

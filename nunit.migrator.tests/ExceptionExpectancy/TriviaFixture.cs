@@ -441,24 +441,19 @@ public class TestClass
     /// </summary>
     /// <param name=""input"">Comment for input</param>
     /// <remarks>This was a remark</remarks>
-    [TestCase(1)]
+    [TestCase(2)]
     public void TestMethod( int input )
+    {
+        throw new Exception();
+    }
+
+    [TestCase(1)]
+    public void TestMethod_ShouldThrowException( int input )
     {
         Assert.Throws<Exception>(() =>
         {
             throw new Exception();
         });
-    }
-
-    /// <summary>
-    /// There was a comment here
-    /// </summary>
-    /// <param name=""input"">Comment for input</param>
-    /// <remarks>This was a remark</remarks>
-    [TestCase(2)]
-    public void TestMethod( int input )
-    {
-        throw new Exception();
     }
 }";
 
@@ -506,13 +501,8 @@ public class TestClass
         throw new Exception();
     }
 
-    /// <summary>
-    /// There was a comment here
-    /// </summary>
-    /// <param name=""input"">Comment for input</param>
-    /// <remarks>This was a remark</remarks>
     [TestCase(2)]
-    public void TestMethod( int input )
+    public void TestMethod_ShouldThrowException( int input )
     {
         Assert.Throws<Exception>(() =>
         {
@@ -559,7 +549,7 @@ public class TestClass
     }
 
     [TestCase(2)]
-    public void TestMethod(int input)
+    public void TestMethod_ShouldThrowException(int input)
     {
         Assert.Throws<Exception>(() =>
         {

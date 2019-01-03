@@ -5,8 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+## [1.1.1] - 2019-01-03
 ### Fixed
-- Expected message and user message special characters handling.
+- Expected message and user message special characters handling. #27
+- Trivia (comments, region directives etc.) preservation when fixing. #29
 
 ## [1.1.0] - 2018-02-17
 ### Added

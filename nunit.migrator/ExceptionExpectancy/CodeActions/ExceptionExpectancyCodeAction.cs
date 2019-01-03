@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -67,7 +68,7 @@ namespace NUnit.Migrator.ExceptionExpectancy.CodeActions
                 fixedMethods.Add(ProduceTestMethodForExceptionCluster(cluster, _clusters.Length, testMethodNamer));
             }
 
-            return fixedMethods;
+            return AddTriviaToFixedMethods(fixedMethods);
         }
 
         private MethodDeclarationSyntax ProduceTestMethodForExceptionCluster(
@@ -77,19 +78,13 @@ namespace NUnit.Migrator.ExceptionExpectancy.CodeActions
             var exceptionExpectancy = cluster.EquivalentItems.First();
 
             var clusterMethod = _method.WithoutExceptionExpectancyInAttributes(testCasesToRemain)
-                .WithBody(CreateAssertedBlock(exceptionExpectancy)).WithTrailingTrivia(CreateClusterMethodTrailingTrivia(cluster))
-                .WithIdentifier(testMethodNamer.CreateName(exceptionExpectancy, clustersCount));
+                .WithBody(CreateAssertedBlock(exceptionExpectancy))
+                .WithIdentifier(testMethodNamer.CreateName(exceptionExpectancy, clustersCount))
+                .WithoutTrivia();
 
             return clusterMethod;
         }
 
-        private SyntaxTriviaList CreateClusterMethodTrailingTrivia(TestCaseExceptionEquivalenceCluster cluster)
-        {
-            return cluster == _clusters.Last()
-                ? _method.GetTrailingTrivia()
-                : _methodLineSeparator;
-        }
-        
         private BlockSyntax CreateAssertedBlock(ExceptionExpectancyAtAttributeLevel exceptionExpectancy)
         {
             return exceptionExpectancy.GetAssertExceptionBlockCreator()
@@ -104,9 +99,37 @@ namespace NUnit.Migrator.ExceptionExpectancy.CodeActions
                 return false;
             }
 
-            fixedExceptionUnrelatedMethod = _method.WithoutExceptionExpectancyInAttributes(_model.ExceptionFreeTestCaseAttributeNodes).WithTrailingTrivia(_methodLineSeparator);
+            fixedExceptionUnrelatedMethod = _method
+                .WithoutExceptionExpectancyInAttributes(_model.ExceptionFreeTestCaseAttributeNodes)
+                .WithoutTrivia();
 
             return true;
+        }
+
+        private IEnumerable<MethodDeclarationSyntax> AddTriviaToFixedMethods(List<MethodDeclarationSyntax> fixedMethods)
+        {
+            if (fixedMethods.Count == 1)
+            {
+                return fixedMethods.Select(m => m.WithTriviaFrom(_method));
+            }
+
+            var first = fixedMethods.First().WithLeadingTrivia(_method.GetLeadingTrivia());
+            var allButFirst = fixedMethods.Skip(1).Select(ProduceMethodWithAdjustedLeadingTrivia).ToList();
+            var middleLength = allButFirst.Count - 1; // skipping the last element
+            var last = allButFirst.Last().WithTrailingTrivia(_method.GetTrailingTrivia());
+
+            return new[]{first}.Concat(allButFirst.Take(middleLength)).Concat(new[]{last});
+
+            MethodDeclarationSyntax ProduceMethodWithAdjustedLeadingTrivia(MethodDeclarationSyntax m)
+            {
+                var trivia = SyntaxFactory.TriviaList(_methodLineSeparator);
+                var indentation = _method.GetLeadingTrivia().LastOrDefault(t => t.IsKind(SyntaxKind.WhitespaceTrivia));
+                if (indentation != default(SyntaxTrivia))
+                {
+                    trivia = trivia.Add(indentation);
+                }
+                return m.WithLeadingTrivia(trivia);
+            }
         }
 
         private static SyntaxTriviaList GetMethodLineSeparator(SyntaxNode methodNode)

@@ -17,12 +17,12 @@
     <Description>Helps transform NUnit v2 to NUnit v3. It consists of a set of Roslyn analyzers and code fixers. Add it to your NUnit v2 test projects, make use of auto fixes, adjust manually when needed, bump NUnit to v3.</Description>
     <PackageTargetFallback>portable-net45+win8</PackageTargetFallback>
     <DevelopmentDependency>true</DevelopmentDependency>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/wachulski/nunit-migrator/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/wachulski/nunit-migrator</PackageProjectUrl>
     <RepositoryUrl>https://github.com/wachulski/nunit-migrator</RepositoryUrl>
     <PackageIconUrl>http://wachulski.com/Content/images/mw-logo.png</PackageIconUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Copyright>Copyright 2017-2018 (c) Marcin Wachulski. All rights reserved.</Copyright>
+    <Copyright>Copyright 2017-2019 (c) Marcin Wachulski. All rights reserved.</Copyright>
     <PackageReleaseNotes>https://raw.githubusercontent.com/wachulski/nunit-migrator/master/CHANGELOG.md</PackageReleaseNotes>
     <PackageTags>NUnit Roslyn CodeAnalysis CodeFix analyzers fixers migration</PackageTags>
   </PropertyGroup>
@@ -36,6 +36,7 @@
   <ItemGroup>
     <None Update="tools\*.ps1" CopyToOutputDirectory="Always" Pack="true" PackagePath="" />
     <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="..\LICENSE" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>

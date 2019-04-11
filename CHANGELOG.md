@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## [1.1.2] - 2019-04-11
+### Fixed
+- Async test methods asserting on exceptions. #32
+
 ## [1.1.1] - 2019-01-03
 ### Fixed
 - Expected message and user message special characters handling. #27

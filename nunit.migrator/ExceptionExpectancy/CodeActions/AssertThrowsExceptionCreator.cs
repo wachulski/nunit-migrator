@@ -26,22 +26,33 @@ namespace NUnit.Migrator.ExceptionExpectancy.CodeActions
             BaseMethodDeclarationSyntax methodDeclarationSyntax,
             TypeSyntax assertedType)
         {
-            var arguments = new List<ArgumentSyntax>
+            var lambda = SyntaxFactory.ParenthesizedLambdaExpression(methodDeclarationSyntax.Body.WithoutTrailingTrivia());
+
+            return methodDeclarationSyntax.Modifiers.Any(SyntaxKind.AsyncKeyword)
+                ? CreateInvocation(
+                    NUnitFramework.Assert.ThrowsAsyncIdentifier,
+                    lambda
+                        .WithAsyncKeyword(SyntaxFactory.Token(SyntaxKind.AsyncKeyword)))
+                : CreateInvocation(
+                    NUnitFramework.Assert.ThrowsIdentifier,
+                    lambda);
+
+            InvocationExpressionSyntax CreateInvocation(string throwsIdentifier, ParenthesizedLambdaExpressionSyntax lambdaExpression)
             {
-                SyntaxFactory.Argument(
-                    SyntaxFactory.ParenthesizedLambdaExpression(
-                        methodDeclarationSyntax.Body.WithoutTrailingTrivia()))
-            };
-            return SyntaxFactory.InvocationExpression(
-                SyntaxFactory.MemberAccessExpression(
-                    SyntaxKind.SimpleMemberAccessExpression,
-                    SyntaxFactory.IdentifierName(NUnitFramework.AssertIdentifier),
-                    SyntaxFactory.GenericName(
-                        SyntaxFactory.ParseToken(NUnitFramework.Assert.ThrowsIdentifier),
-                        SyntaxFactory.TypeArgumentList(
-                            SyntaxFactory.SingletonSeparatedList(assertedType)))),
-                SyntaxFactory.ArgumentList(
-                    SyntaxFactory.SeparatedList(arguments)));
+                return SyntaxFactory.InvocationExpression(
+                    SyntaxFactory.MemberAccessExpression(
+                        SyntaxKind.SimpleMemberAccessExpression,
+                        SyntaxFactory.IdentifierName(NUnitFramework.AssertIdentifier),
+                        SyntaxFactory.GenericName(
+                            SyntaxFactory.ParseToken(throwsIdentifier),
+                            SyntaxFactory.TypeArgumentList(
+                                SyntaxFactory.SingletonSeparatedList(assertedType)))),
+                    SyntaxFactory.ArgumentList(
+                        SyntaxFactory.SeparatedList(new List<ArgumentSyntax>
+                        {
+                            SyntaxFactory.Argument(lambdaExpression)
+                        })));
+            }
         }
     }
 }

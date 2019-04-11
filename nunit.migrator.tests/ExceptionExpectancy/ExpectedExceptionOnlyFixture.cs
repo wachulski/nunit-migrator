@@ -631,5 +631,48 @@ public class TestClass
 }";
             VerifyCSharpFix(source, expected);
         }
+
+        // fix: https://github.com/wachulski/nunit-migrator/issues/32
+        [Test]
+        public void WhenAsyncTestMethodWithAwaitInsideBody_FixesToLambdaWithAsyncAwait()
+        {
+            var source = @"
+using NUnit.Framework;
+using System;
+using System.Threading.Tasks;
+
+class C
+{
+    private static async Task DoAsync() => await Task.CompletedTask;
+
+    [Test]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public async Task ThrowingAsync()
+    {
+        var task = DoAsync();
+        await task;
+    }
+}";
+            var expected = @"
+using NUnit.Framework;
+using System;
+using System.Threading.Tasks;
+
+class C
+{
+    private static async Task DoAsync() => await Task.CompletedTask;
+
+    [Test]
+    public async Task ThrowingAsync()
+    {
+        Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        {
+            var task = DoAsync();
+            await task;
+        });
+    }
+}";
+            VerifyCSharpFix(source, expected, allowNewCompilerDiagnostics: true);
+        }
     }
 }

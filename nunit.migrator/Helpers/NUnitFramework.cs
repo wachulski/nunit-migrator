@@ -38,6 +38,7 @@ namespace NUnit.Migrator.Helpers
         internal static class Assert
         {
             public const string ThrowsIdentifier = "Throws";
+            public const string ThrowsAsyncIdentifier = "ThrowsAsync";
             public const string ThatIdentifier = "That";
         }
 

@@ -20,8 +20,8 @@ if ($step -eq 'begin') {
     /k:MarWac_NUnit_Migrator `
     /n:"nunit.migrator" `
     /v:"$version" `
+    /o:"wachulski-github" `
     /d:"sonar.host.url=https://sonarqube.com" `
-    /d:"sonar.organization=wachulski-github" `
     /d:"sonar.login=$sonarLogin" `
     /d:"sonar.cs.dotcover.reportsPaths=dotCover.html" `
     /d:"sonar.msbuild.testProjectPattern=nunit\.migrator\.tests"

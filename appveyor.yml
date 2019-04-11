@@ -4,7 +4,7 @@ environment:
   gitHubAuthToken:
     secure: PfDIBcJmuoBtInoTSoSMOQCUtlk0+WU6wRYG9/MwWbFAEhOLJnQ1vhMu3FcOXLHt
   nugetOrgApiKey:
-    secure: RoB7VF83e2Nk4/rIUilssnSNHmThFSHyEFeOtFBPKhOZQYwu8XvuqXS4seBEl+yG
+    secure: N/XVEKUOp2xe15mF8XFXVeas3BzEYeQRCGoalD5qfooKvgf3o5fyUqutTmyhDFHY
   sonarLogin:
     secure: us3NmhirEyZlRItv0KXrdOeGZATXPrLl2r7b0qJp77NBsmQNo2iwLFt4zzXIJGRk
 configuration: Release
